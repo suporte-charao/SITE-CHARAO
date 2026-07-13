@@ -113,19 +113,8 @@ export default function Footer() {
         </div>
 
         {/* Barra inferior */}
-        <div className="mt-16 flex flex-col gap-3 border-t border-white/10 pt-6 text-xs text-white/45 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-16 border-t border-white/10 pt-6 text-xs text-white/45">
           <p>Copyright © 2026 Grupo Charão – Todos os direitos reservados</p>
-          <p>
-            Desenvolvido por{" "}
-            <a
-              href="https://instagram.com/ofernandes.co"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-white/60 transition-colors hover:text-white"
-            >
-              @ofernandes.co
-            </a>
-          </p>
         </div>
       </div>
     </footer>
