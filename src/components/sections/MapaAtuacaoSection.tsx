@@ -1,15 +1,39 @@
 import Image from "next/image";
+import { Briefcase, Hexagon, ShoppingBag, Truck } from "lucide-react";
 
 const ambientes = [
   "Zona Franca de Manaus",
-  "Área de Livre Comércio",
+  "Área de Livre Comércio de Boa Vista",
   "Indústria, comércio e serviços de médio e grande porte",
+];
+
+/* Verdes da faixa de setores, amostrados da arte de referência do cliente.
+   Não vêm da paleta oficial: o tributario-900 (#0D3731) é mais escuro e
+   puxa para o teal, enquanto a arte usa um verde-floresta mais aberto. */
+const SETORES_VERDE = "#16402E";
+const SETORES_LINHA = "#2C6B4E";
+const SETORES_ICONE = "#4ADE80";
+const SETORES_TEXTO = "#D8F5E3";
+
+/**
+ * Setores atendidos — faixa verde com 4 células, seguindo a arte de
+ * referência. Refeito em HTML (e não como imagem) para o texto ficar nítido
+ * em qualquer tela, ser lido por buscadores e leitores de tela, e reagir ao
+ * redimensionamento: no mobile as células viram uma coluna só.
+ */
+const setores = [
+  { nome: "Indústrias", Icone: Briefcase },
+  { nome: "Distribuidoras", Icone: Truck },
+  { nome: "Varejo", Icone: ShoppingBag },
+  { nome: "Serviços", Icone: Hexagon },
 ];
 
 export default function MapaAtuacaoSection() {
   return (
+    // Sem padding-bottom de propósito: a faixa verde dos setores É o fim da
+    // seção, encostando direto na seção seguinte.
     <section
-      className="py-24 text-white lg:py-32"
+      className="pt-24 text-white lg:pt-32"
       style={{ backgroundColor: "#04101E" }}
     >
       <div className="mx-auto max-w-container px-6 lg:px-10">
@@ -61,14 +85,60 @@ export default function MapaAtuacaoSection() {
               ))}
             </ul>
 
-            <a
-              href="#contato"
-              className="mt-10 inline-flex rounded-full bg-areia-400 px-7 py-3.5 text-sm font-medium text-carvao transition-colors hover:bg-areia-300"
-            >
-              Agendar conversa
-            </a>
           </div>
         </div>
+
+      </div>
+
+      {/* Setores atendidos — FORA do container, para a faixa verde atravessar
+          a página de ponta a ponta, como na arte de referência. A seção não
+          tem padding inferior, então esta faixa É o fim da seção. */}
+      <div className="mt-16 lg:mt-20">
+        <div className="mx-auto max-w-container px-6 lg:px-10">
+          <h3 className="text-center text-xl font-light text-white sm:text-2xl">
+            Nossa atuação abrange os setores:
+          </h3>
+        </div>
+
+        {/* gap-px sobre um fundo mais claro cria os fios divisórios entre as
+            células sem precisar acertar bordas célula a célula. */}
+        <ul
+          className="mt-8 grid grid-cols-1 gap-px sm:grid-cols-2"
+          style={{ backgroundColor: SETORES_LINHA }}
+        >
+          {setores.map(({ nome, Icone }) => (
+            <li
+              key={nome}
+              className="group relative isolate flex items-center gap-4 overflow-hidden bg-[#16402E] px-7 py-6 transition-colors duration-500 ease-out hover:bg-[#1A4C36] sm:px-10"
+            >
+              {/* Varredura de luz: entra pela esquerda no hover, como se a
+                  célula acendesse da margem para dentro. */}
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-0 -z-10 -translate-x-full bg-gradient-to-r from-[#4ADE80]/20 via-[#4ADE80]/[0.06] to-transparent transition-transform duration-[900ms] ease-out group-hover:translate-x-0"
+              />
+
+              {/* Fio vivo desenhando a base da célula, da esquerda para a
+                  direita — o "sublinhado" que confirma o hover. */}
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-[#4ADE80] transition-transform duration-700 ease-out group-hover:scale-x-100"
+              />
+
+              {/* O ícone ganha uma moldura que acende e um halo verde. */}
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#4ADE80]/0 ring-1 ring-[#4ADE80]/20 transition-all duration-500 ease-out group-hover:bg-[#4ADE80]/10 group-hover:ring-[#4ADE80]/70 group-hover:shadow-[0_0_24px_-4px_rgba(74,222,128,0.55)]">
+                <Icone
+                  className="h-5 w-5 text-[#4ADE80] transition-transform duration-500 ease-out group-hover:scale-110"
+                  strokeWidth={1.75}
+                />
+              </span>
+
+              <span className="text-[15px] font-semibold text-[#D8F5E3] transition-transform duration-500 ease-out group-hover:translate-x-1">
+                {nome}
+              </span>
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );

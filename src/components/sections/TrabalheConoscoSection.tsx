@@ -28,21 +28,25 @@ export default function TrabalheConoscoSection() {
             </span>
             <h2 className="mt-6 text-balance text-4xl font-light leading-[1.08] text-carvao sm:text-5xl">
               Faça parte do{" "}
-              <span className="font-medium">Grupo Charão</span>
+              <span className="font-medium">Time Charão</span>
             </h2>
             <p className="mt-6 max-w-md text-pretty text-lg leading-relaxed text-carvao/70">
-              Buscamos contadores, tributaristas e profissionais de gestão que
-              querem construir uma atuação técnica sólida e próxima do
-              cliente. Se você quer crescer numa estrutura contábil,
-              tributária e de educação empresarial em expansão, queremos te
-              conhecer.
+              Construa sua trajetória em uma empresa que valoriza pessoas,
+              conhecimento, inovação e resultados. Buscamos profissionais
+              comprometidos, que desejam crescer, assumir desafios e contribuir
+              para uma cultura forte e colaborativa.
             </p>
-            {/* TODO: apontar para a página de vagas quando estiver publicada. */}
+            {/* Página de recrutamento — domínio externo, então abre em nova
+                aba (o site institucional continua aberto atrás). O rel
+                noopener/noreferrer impede que a página de destino acesse
+                esta janela pelo window.opener. */}
             <a
-              href="/trabalhe-conosco"
+              href="https://recrutamento.charaotechub.com/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-9 inline-flex w-fit items-center gap-2 rounded-full bg-carvao px-8 py-3.5 text-sm font-semibold text-white transition-transform duration-300 hover:scale-[1.03] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-carvao/60"
             >
-              Ver vagas abertas
+              Conheça nossas vagas
             </a>
           </div>
 

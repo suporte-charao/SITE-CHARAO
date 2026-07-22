@@ -25,21 +25,39 @@ export default function ManifestoFaixaSection() {
         />
       </div>
 
-      <div className="mx-auto max-w-4xl px-6 text-center text-lg font-medium leading-relaxed text-gray-600 md:text-xl">
-        Com forte atuação na região Norte e visibilidade nacional, unimos{" "}
-        <span className="font-semibold text-[#8a6d2f]">19 anos de expertise</span>{" "}
-        na{" "}
-        <span className="font-semibold text-[#8a6d2f]">
-          Zona Franca de Manaus
-        </span>{" "}
-        e na{" "}
-        <span className="font-semibold text-[#8a6d2f]">
-          Área de Livre Comércio
-        </span>{" "}
-        de Boa Vista para dominar a complexidade do{" "}
-        <span className="font-semibold text-[#8a6d2f]">Lucro Real</span> e da{" "}
-        <span className="font-semibold text-[#8a6d2f]">Reforma Tributária</span>,
-        garantindo segurança e crescimento para sua empresa.
+      {/* Destaques exatamente nos trechos marcados em negrito pelo cliente.
+          Verde ESCURO da paleta (#0D3731 / tributario-900): sobre este fundo
+          claro o verde vivo (#49DE7B) ficaria ilegível — o escuro mantém a
+          cor da marca com contraste alto. */}
+      <div className="mx-auto max-w-4xl space-y-5 px-6 text-center text-base font-medium leading-relaxed text-gray-600 md:text-lg">
+        <p>
+          Com forte atuação na{" "}
+          <strong className="font-bold text-tributario-900">região Norte</strong>{" "}
+          e visibilidade nacional, o Grupo Charão é um ecossistema formado pela{" "}
+          <strong className="font-bold text-tributario-900">
+            Charão Consultoria
+          </strong>
+          , especializada em gestão contábil, fiscal e DP; pela{" "}
+          <strong className="font-bold text-tributario-900">
+            Charão Tributário
+          </strong>
+          , voltada à estratégia e às soluções tributárias; e pela{" "}
+          <strong className="font-bold text-tributario-900">
+            Charão Educacional
+          </strong>
+          , dedicada à educação e ao desenvolvimento empresarial.
+        </p>
+        <p>
+          Unimos 19 anos de expertise na{" "}
+          <strong className="font-bold text-tributario-900">
+            Zona Franca de Manaus e na Área de Livre Comércio de Boa Vista
+          </strong>{" "}
+          para dominar as complexidades do{" "}
+          <strong className="font-bold text-tributario-900">
+            Lucro Real e da Reforma Tributária
+          </strong>
+          , garantindo segurança e crescimento para sua empresa.
+        </p>
       </div>
 
       {/* Card de vídeo: poster com botão de play em moldura dourada premium.

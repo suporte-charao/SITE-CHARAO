@@ -1,25 +1,49 @@
-import { Quote, Star } from "lucide-react";
+import DepoimentoCard3D, {
+  type Depoimento,
+} from "@/components/ui/DepoimentoCard3D";
 
-const depoimentos = [
+/**
+ * Depoimentos reais de clientes. Cada um tem uma frase de destaque (a fala
+ * entre aspas) e o relato que a desdobra. O logo vem da mesma pasta usada na
+ * seção de clientes, logo acima — as quatro empresas estão lá.
+ */
+const depoimentos: Depoimento[] = [
   {
-    text: "A Charão trouxe clareza para nossa apuração no Lucro Real. Hoje temos indicadores que realmente apoiam a gestão.",
-    author: "Diretor Financeiro",
-    empresa: "Indústria — ZFM",
+    frase: "O trabalho é essencial para atravessar a transição com segurança.",
+    relato:
+      "Os sócios reconheceram o comprometimento da equipe, o avanço das parametrizações e destacaram a clareza nos cenários de custo e crédito, além da importância dos encaminhamentos organizados para garantir conformidade antes do início das penalidades.",
+    autor: "Sr. Anderson & Sr. Jocelino",
+    cargo: "Sócios",
+    empresa: "Queiroz",
+    logo: "3.png",
   },
   {
-    text: "A assessoria tributária identificou oportunidades que não víamos. O retorno superou nossas expectativas.",
-    author: "CEO",
-    empresa: "Comércio — ALC",
+    frase: "A presença e atenção da equipe Charão para dúvidas é o mais valioso.",
+    relato:
+      "A linguagem acessível para não-contadores, as orientações práticas sobre configuração de sistema e a explicação da lógica tributária foram os pontos mais elogiados. “Luis sempre procura a equipe quando tem dúvidas.”",
+    autor: "Luis",
+    cargo: "Diretor",
+    empresa: "Bonna Vitta",
+    logo: "5.jpg",
   },
   {
-    text: "As mentorias transformaram a forma como nossa equipe financeira enxerga a contabilidade como ferramenta de gestão.",
-    author: "Empresário",
-    empresa: "Serviços",
+    frase: "Tá muito boa a interação, tá positiva.",
+    relato:
+      "A equipe destacou que a Charão está sempre atenta às novidades e que, quando houve uma inconsistência no sistema, avisou imediatamente para acionar o suporte e corrigir antes de gerar problema.",
+    autor: "Maykon",
+    cargo: "Gestor",
+    empresa: "Gavião",
+    logo: "6.png",
   },
   {
-    text: "Profissionalismo, proximidade e profundidade técnica. Parceiros de verdade na operação do negócio.",
-    author: "Controller",
-    empresa: "Indústria",
+    frase:
+      "A contratação foi decisiva, tanto para o sistema quanto para a contabilidade.",
+    relato:
+      "Larissa elogiou a preocupação da consultoria em caminhar junto com o cliente, envolvendo a equipe e explicando cada etapa. “Tudo fluiu no momento certo. A paciência com quem está aprendendo fez toda a diferença.”",
+    autor: "Larissa",
+    cargo: "Responsável pela implantação",
+    empresa: "Parima",
+    logo: "10.jpg",
   },
 ];
 
@@ -36,29 +60,11 @@ export default function DepoimentosSection() {
           </p>
         </div>
 
-        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {depoimentos.map((item) => (
-            <article
-              key={item.author + item.empresa}
-              className="flex flex-col rounded-2xl bg-white p-6 shadow-sm"
-            >
-              <Quote className="h-8 w-8 text-areia-400" />
-              <div className="mt-3 flex gap-0.5">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star
-                    key={i}
-                    className="h-3.5 w-3.5 fill-areia-400 text-areia-400"
-                  />
-                ))}
-              </div>
-              <p className="mt-4 flex-1 text-sm leading-relaxed text-carvao/70">
-                &ldquo;{item.text}&rdquo;
-              </p>
-              <div className="mt-6 border-t border-carvao/5 pt-4">
-                <p className="text-sm font-medium text-carvao">{item.author}</p>
-                <p className="text-xs text-carvao/50">{item.empresa}</p>
-              </div>
-            </article>
+        {/* Duas colunas: com a frase de destaque + o relato, quatro colunas
+            deixariam a linha estreita demais para ler. */}
+        <div className="mt-14 grid gap-7 lg:grid-cols-2 lg:gap-10">
+          {depoimentos.map((item, i) => (
+            <DepoimentoCard3D key={item.empresa} item={item} index={i} />
           ))}
         </div>
       </div>

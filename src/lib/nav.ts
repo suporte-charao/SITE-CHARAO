@@ -10,11 +10,12 @@ export type NavLink = {
 
 export const navLinks: NavLink[] = [
   { label: "Início", href: "#inicio" },
-  { label: "Serviços", href: "#servicos" },
-  { label: "Sobre nós", href: "#sobre-nos" },
-  { label: "Cases", href: "#cases" },
+  { label: "Empresas e Serviços", href: "#empresas-servicos" },
+  { label: "Cases", href: "#clientes" },
+  { label: "História", href: "#sobre-nos" },
+  { label: "Prêmios", href: "#premios" },
+  { label: "Carreira", href: "#trabalhe-conosco" },
   { label: "Contato", href: "#contato" },
-  { label: "Trabalhe conosco", href: "#trabalhe-conosco" },
 ];
 
 /** IDs das seções, derivados dos links — usados pelo scroll-spy. */

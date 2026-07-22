@@ -1,5 +1,4 @@
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
 
 /* Dourado da direção de arte "Dark Premium". */
 const GOLD = "#C5A059";
@@ -25,84 +24,18 @@ export default function HeroSection() {
       id="inicio"
       className="relative isolate overflow-hidden bg-[#050505]"
     >
-      {/* Atmosfera "Dark Premium": brilho dourado ambiente + anéis concêntricos
-          finos de luz. Camada de FUNDO (-z-10, absolute inset-0 relativa à
-          <section> INTEIRA — cobre 100% da altura, inclusive a faixa da curva
-          no rodapé, encostando exatamente na borda da próxima seção). Os fios
-          passam por trás do texto e da foto, reaparecendo só nos vazios. */}
+      {/* Fundo limpo (brief Sessão 1: "retirar linhas de fundo para ficar
+          visivelmente mais limpo"). Sem brilho/atmosfera dourada — só um preto
+          sólido com uma vinheta sutil para dar profundidade e ajudar a
+          legibilidade do texto, como no Figma. */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 overflow-hidden"
-      >
-        {/* Brilho ambiente dourado, quente, atrás do sujeito */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(58% 55% at 74% 34%, rgba(197,160,89,0.16), rgba(197,160,89,0.05) 42%, transparent 70%)",
-          }}
-        />
-
-        {/* Arcos concêntricos dourados (listras). IMPORTANTE: a foto tem uma
-            máscara de opacidade na borda esquerda (transparente→opaca), então
-            z-index sozinho NÃO impede as linhas de vazarem ATRAVÉS da zona
-            translúcida sobre o rosto. Este wrapper corta os anéis
-            horizontalmente: 100% visíveis no preto puro à esquerda e
-            totalmente extintos antes de alcançar a foto/rosto (>54% da tela). */}
-        <div
-          className="absolute inset-0"
-          style={{
-            WebkitMaskImage:
-              "linear-gradient(to right, black 40%, transparent 54%)",
-            maskImage:
-              "linear-gradient(to right, black 40%, transparent 54%)",
-          }}
-        >
-          {[
-            { size: 1240, opacity: 0.45, w: "1.5px" },
-            { size: 980, opacity: 0.34, w: "1.25px" },
-            { size: 720, opacity: 0.24, w: "1px" },
-            { size: 480, opacity: 0.16, w: "1px" },
-          ].map((ring) => (
-            <div
-              key={ring.size}
-              className="absolute top-1/2 rounded-full"
-              style={{
-                right: `calc(26% - ${ring.size / 2}px)`,
-                height: ring.size,
-                width: ring.size,
-                marginTop: -ring.size / 2,
-                border: `${ring.w} solid rgba(197,160,89,${ring.opacity})`,
-                WebkitMaskImage:
-                  "radial-gradient(70% 85% at 8% 50%, black 30%, transparent 72%)",
-                maskImage:
-                  "radial-gradient(70% 85% at 8% 50%, black 30%, transparent 72%)",
-              }}
-            />
-          ))}
-        </div>
-
-        {/* Zona de sombra atrás do bloco de texto: um scrim preto radial
-            pintado POR CIMA dos fios (mas ainda no fundo, sob o texto).
-            As linhas dissolvem ao se aproximar das letras e reaparecem no
-            preto vazio ao redor — como no layout de referência. */}
-        <div
-          className="absolute left-[-8%] top-[18%] h-[56%] w-[112%] lg:w-[60%]"
-          style={{
-            background:
-              "radial-gradient(50% 50% at 50% 50%, #050505 42%, rgba(5,5,5,0.85) 62%, transparent 100%)",
-          }}
-        />
-
-        {/* Vinheta sutil para aprofundar as bordas e concentrar o olhar */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(120% 120% at 50% 45%, transparent 55%, rgba(0,0,0,0.55) 100%)",
-          }}
-        />
-      </div>
+        className="pointer-events-none absolute inset-0 -z-10"
+        style={{
+          background:
+            "radial-gradient(130% 120% at 50% 40%, transparent 58%, rgba(0,0,0,0.5) 100%)",
+        }}
+      />
 
       {/* Foto do Eduardo: absolute inset-0 relativa à <section> INTEIRA (não só
           à primeira tela), então a arte se estende sem margem/gap até a borda
@@ -138,49 +71,42 @@ export default function HeroSection() {
           revelada só ao rolar. */}
       <div className="relative z-20 mx-auto grid min-h-screen max-w-[1180px] grid-cols-1 items-center gap-8 px-8 pb-16 pt-28 lg:grid-cols-2 lg:gap-8 lg:px-12 lg:pb-16 lg:pt-44">
         <div className="relative z-20 max-w-xl">
-          <h1 className="max-w-none text-balance text-[1.6rem] font-medium leading-[1.18] tracking-tight text-white [text-shadow:0_2px_18px_rgba(0,0,0,0.55)] sm:text-[2rem] lg:w-[37rem] lg:text-[2.15rem] lg:leading-[1.25]">
+          {/* Tipografia do Figma: peso REGULAR (não medium) em corpo grande,
+              entrelinha ~1.16 — o look "editorial leve" da referência. */}
+          <h1 className="max-w-none text-balance text-[2rem] font-normal leading-[1.18] tracking-tight text-white [text-shadow:0_2px_18px_rgba(0,0,0,0.55)] sm:text-[2.5rem] lg:w-[34rem] lg:text-[3rem] lg:leading-[1.16]">
             {/* Quebras manuais no desktop (lg:block), calibradas para larguras
                 de linha equilibradas (bloco visualmente organizado, sem
                 recorrer a text-justify); no mobile os spans ficam inline e o
                 texto flui naturalmente. */}
+            <span className="lg:block">Estratégia que protege</span>{" "}
             <span className="lg:block">
-              Transformamos{" "}
-              <span className="text-[#C5A059]">gestão contábil</span>,
+              o lucro, <span className="text-tributario-300">fortalece decisões</span>
             </span>{" "}
             <span className="lg:block">
-              <span className="text-[#C5A059]">inteligência tributária</span> e{" "}
-              <span className="text-[#C5A059]">educação</span>
+              <span className="text-tributario-300">e sustenta</span> o crescimento
             </span>{" "}
-            <span className="lg:block">
-              <span className="text-[#C5A059]">empresarial</span> em
-              segurança,
-            </span>{" "}
-            <span className="lg:block">eficiência e proteção do lucro.</span>
+            <span className="lg:block">da sua empresa.</span>
           </h1>
 
-          <div className="relative mt-8 inline-block">
-            {/* Glow dourado respirando atrás do botão — chama o olhar */}
-            <span
-              aria-hidden
-              className="pointer-events-none absolute -inset-1.5 rounded-full bg-[#C5A059] opacity-40 blur-xl motion-safe:animate-glowPulse"
-            />
+          <p className="mt-6 max-w-md text-pretty text-base leading-relaxed text-gray-400 lg:text-lg">
+            Lucro Real, Reforma Tributária e educação empresarial aplicados com
+            método, indicadores e foco em resultado.
+          </p>
+
+          {/* Botão inferior (brief Sessão 1): "Descubra a solução certa para
+              sua empresa" → leva à seção "Conheça o Grupo Charão" (empresas). */}
+          <div className="mt-9">
             <a
-              href="#contato"
-              className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-b from-[#e2c583] to-[#C5A059] px-7 py-3 text-[13.5px] font-semibold text-black shadow-[0_6px_28px_-6px_rgba(197,160,89,0.6)] ring-1 ring-[#efd9a6]/50 transition-all duration-300 ease-out hover:scale-[1.04] hover:shadow-[0_10px_44px_-4px_rgba(197,160,89,0.9)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#C5A059]"
+              href="#empresas-servicos"
+              className="inline-flex items-center justify-center rounded-full bg-laranja-500 px-8 py-3.5 text-sm font-semibold text-marinho-950 transition-colors hover:bg-laranja-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-laranja-500"
             >
-              {/* Brilho que varre da esquerda à direita no hover */}
-              <span
-                aria-hidden
-                className="pointer-events-none absolute inset-y-0 left-0 w-1/2 -translate-x-[180%] -skew-x-12 bg-gradient-to-r from-transparent via-white/60 to-transparent transition-transform duration-[900ms] ease-out group-hover:translate-x-[280%]"
-              />
-              <span className="relative">Agendar conversa</span>
-              <span className="relative ml-3 flex h-6 w-6 items-center justify-center rounded-full bg-black/15">
-                <ArrowRight className="h-3.5 w-3.5" strokeWidth={2} />
-              </span>
+              Descubra a solução certa para sua empresa
             </a>
           </div>
 
-          {/* Prova social imediata: GPTW + Leaders League logo abaixo do CTA */}
+          {/* Prova social imediata: GPTW + Leaders League logo abaixo do CTA.
+              A âncora #premios saiu daqui quando a Sessão 10 (Prêmios) ganhou
+              seção própria — dois elementos com o mesmo id quebrariam o menu. */}
           <div className="mt-10 flex items-center gap-6">
             {seals.map((seal) => (
               <Image

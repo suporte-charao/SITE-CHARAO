@@ -22,6 +22,18 @@ type Empresa = {
   paragraph: string;
   /** Segundo parágrafo, opcional. */
   paragraph2?: string;
+  /** Terceiro parágrafo, opcional. */
+  paragraph3?: string;
+  /**
+   * Frentes de atuação em linha ("Gestão Contábil | Gestão Fiscal | ...").
+   * Quando presente, substitui a checklist e é exibida acima do CTA.
+   */
+  frentes?: string[];
+  /**
+   * Termos-chave realçados nos parágrafos → cor. Cada termo recebe uma cor
+   * distinta da paleta oficial da própria marca.
+   */
+  highlights?: Record<string, string>;
   /** Rótulo do CTA que levará ao subdomínio da empresa. */
   ctaLabel: string;
   /** Grade de indicadores curtos. Ignorada quando `checklist` está presente. */
@@ -54,6 +66,33 @@ type Empresa = {
   };
 };
 
+/**
+ * Aplica os realces coloridos aos termos-chave dentro de um parágrafo.
+ * Ordena por comprimento decrescente para que um termo longo
+ * ("Área de Livre Comércio de Boa Vista") vença um eventual termo curto
+ * contido nele.
+ */
+function realcar(texto: string, highlights?: Record<string, string>) {
+  if (!highlights) return texto;
+  const termos = Object.keys(highlights)
+    .sort((a, b) => b.length - a.length)
+    .map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+  const partes = texto.split(new RegExp(`(${termos.join("|")})`, "g"));
+  return partes.map((parte, i) =>
+    highlights[parte] ? (
+      <strong
+        key={i}
+        style={{ color: highlights[parte] }}
+        className="font-semibold"
+      >
+        {parte}
+      </strong>
+    ) : (
+      parte
+    ),
+  );
+}
+
 const empresas: Empresa[] = [
   {
     id: "consultoria",
@@ -64,25 +103,26 @@ const empresas: Empresa[] = [
     headlineLead: "Charão",
     headlineHighlight: "Consultoria",
     headlineTail: "",
-    subheadline: "Contabilidade especializada em Lucro Real",
+    subheadline: "Contabilidade que participa da gestão.",
     paragraph:
-      "A Charão Consultoria atua na estrutura contábil da empresa com proximidade real da rotina do cliente, sustentando organização, controle, indicadores e segurança na condução das obrigações fiscais e contábeis.",
+      "Atuamos na gestão contábil, fiscal e de departamento pessoal de empresas de médio e grande porte, gerando indicadores confiáveis para apoiar decisões, ampliar a previsibilidade e otimizar a carga tributária de maneira estruturada. Com isso, sua empresa ganha mais controle, segurança e clareza para conduzir a gestão.",
     paragraph2:
-      "Mais do que executar rotinas, a atuação busca dar consistência à operação e apoiar decisões com base em informação confiável.",
-    ctaLabel: "Conhecer a Consultoria",
-    checklist: {
-      heading: "Principais frentes de atuação",
-      items: [
-        "Escrituração contábil completa",
-        "Apuração de tributos no regime de Lucro Real",
-        "Revisão de processos contábeis",
-        "Rotinas fiscais e contábeis",
-        "Indicadores para apoio à gestão",
-        "Acompanhamento da legislação",
-      ],
-      closingNote:
-        "Empresas no Lucro Real exigem presença técnica, leitura constante da operação e uma contabilidade que vá além do cumprimento das obrigações.",
+      "Somos especialistas em empresas do Lucro Real, com experiência consolidada na Zona Franca de Manaus e na Área de Livre Comércio de Boa Vista, compreendendo profundamente as particularidades fiscais, contábeis e operacionais da região para reduzir riscos e garantir maior eficiência às operações.",
+    paragraph3:
+      "Por meio da Metodologia Charão, conectamos profissionais especializados, processos seguros e tecnologia para conhecer cada negócio a fundo, acompanhar a gestão de perto e transformar dados em informações estratégicas, proporcionando decisões mais seguras e um crescimento sustentável.",
+    frentes: ["Gestão Contábil", "Gestão Fiscal", "Departamento Pessoal"],
+    /* Realces todos na família rosé/tan da paleta oficial da Consultoria
+       (#C7A78F). Quatro matizes distintos deixavam o painel excessivamente
+       colorido — mantendo uma só família e variando só a luminosidade, os
+       termos continuam se destacando sem virar arco-íris.
+       Contrastes sobre o fundo #0B132B: 8,2:1 e 11,4:1. */
+    highlights: {
+      "Lucro Real": "#DFC4AE",
+      "Zona Franca de Manaus": "#C7A78F",
+      "Área de Livre Comércio de Boa Vista": "#C7A78F",
+      "Metodologia Charão": "#DFC4AE",
     },
+    ctaLabel: "Conheça a Charão Consultoria",
     photoAlt: "Sócio responsável pela Charão Consultoria",
     photoSrc: "/socio-consultoria.jpg",
     icon: TrendingUp,
@@ -108,25 +148,28 @@ const empresas: Empresa[] = [
     headlineHighlight: "Tributário",
     headlineTail: "",
     subheadline:
-      "Estratégia tributária, recuperação de créditos e Reforma Tributária",
+      "Estratégia tributária para proteger resultados e ampliar a eficiência.",
     paragraph:
-      "A Charão Tributário atua com visão técnica aprofundada sobre a estrutura fiscal das empresas, com proximidade da realidade do cliente e análises voltadas à segurança das decisões, à identificação de oportunidades e à preparação para os impactos da Reforma Tributária.",
+      "Atuamos na recuperação de créditos pagos indevidamente, na revisão de operações e no planejamento tributário estratégico, identificando riscos e oportunidades para reduzir perdas, recuperar recursos e fortalecer os resultados da empresa.",
     paragraph2:
-      "A atuação combina leitura técnica, respaldo legal e compreensão prática da operação para apoiar movimentos tributários com mais clareza e segurança.",
-    ctaLabel: "Conhecer Mentoria",
-    checklist: {
-      heading: "Atuações mais recorrentes",
-      items: [
-        "Planejamento tributário estratégico",
-        "Revisão de tributos pagos",
-        "Recuperação de créditos tributários",
-        "Estudos sobre a Reforma Tributária",
-        "Revisão de enquadramentos fiscais",
-        "Estruturação tributária para expansão ou reorganização societária",
-      ],
-      closingNote:
-        "O foco é garantir segurança fiscal, capturar oportunidades legítimas e preparar a empresa para um ambiente tributário em transformação.",
+      "Somos especialistas nos impactos e na aplicação da Reforma Tributária na Zona Franca de Manaus e na Área de Livre Comércio de Boa Vista, apoiando empresas na preparação para as novas regras e na construção de estratégias que reduzam incertezas, preservem margens e mantenham sua competitividade.",
+    paragraph3:
+      "Por meio da Mentoria da Reforma Tributária, analisamos os impactos sobre preços, margens e operações, orientando empresários e gestores na aplicação das mudanças ao longo dos sete anos de transição. Com base em dados reais e na realidade de cada negócio, proporcionamos mais clareza para decidir, antecipar riscos e conduzir as mudanças de forma estruturada.",
+    frentes: [
+      "Reforma Tributária",
+      "Assessoria Fiscal, Contábil e DP",
+      "Mentoria da Reforma Tributária",
+    ],
+    /* Verde ESCURO oficial do Tributário (#0D3731). Sobre o fundo verde do
+       painel ele rende 4,5:1 e se separa nitidamente do corpo em branco —
+       um verde claro ficaria indistinguível do texto. Mesma lógica de
+       "uma só família de cor" adotada na Consultoria. */
+    highlights: {
+      "Reforma Tributária na Zona Franca de Manaus e na Área de Livre Comércio de Boa Vista":
+        "#0D3731",
+      "Mentoria da Reforma Tributária": "#0D3731",
     },
+    ctaLabel: "Saiba mais sobre a Charão Tributário",
     photoAlt: "Sócia responsável pela Charão Tributário",
     photoSrc: "/021A6502.jpg",
     icon: Scale,
@@ -152,29 +195,18 @@ const empresas: Empresa[] = [
     headlineHighlight: "Educacional",
     headlineTail: "",
     subheadline:
-      "Mentorias e treinamentos para empresários e contadores",
+      "A experiência de 19 anos transformada em método para fortalecer negócios.",
     paragraph:
-      "A Charão Educacional transforma experiência prática em mentorias e treinamentos voltados ao desenvolvimento de empresários e contadores, com foco em gestão empresarial, estratégia, indicadores e tomada de decisão.",
+      "A Charão Educacional nasceu da convicção de que o conhecimento construído na prática precisa ser compartilhado. Por meio de mentorias e cursos, levamos a empresários de serviços, contadores e empresários contábeis a experiência acumulada em 19 anos de gestão, crescimento e resultados, contribuindo para decisões mais seguras, lideranças mais preparadas e empresas mais estruturadas.",
     paragraph2:
-      "A proposta é ampliar repertório, fortalecer análise e levar conhecimento aplicável à realidade de quem decide e conduz o negócio.",
-    ctaLabel: "Conhecer o Educacional",
-    checklist: {
-      heading: "Atuações mais recorrentes",
-      items: [
-        "Mentorias estratégicas para empresários",
-        "Treinamentos em gestão empresarial",
-        "Capacitação para contadores",
-        "Treinamentos para equipes financeiras e contábeis",
-        "Conteúdos sobre indicadores e decisões gerenciais",
-      ],
-      closingNote:
-        "O objetivo é transformar conhecimento em critério, leitura de cenário e capacidade real de decisão.",
+      "Com o Método Charão, apoiamos a estruturação de empresas a partir de indicadores que orientam decisões, uma estrutura societária bem definida, uma cultura forte e uma gestão capaz de sustentar o crescimento. Mais do que transmitir conhecimento, conduzimos sua aplicação na realidade de cada negócio para fortalecer a gestão, ampliar a clareza estratégica e transformar estratégia em resultados.",
+    frentes: ["Mentorias e cursos para empresários e contadores"],
+    /* Laranja PRINCIPAL oficial do Educacional (#FF7800), 6,6:1 sobre o fundo
+       #1A1A1A. Um único termo realçado, uma única cor. */
+    highlights: {
+      "Método Charão": "#FF7800",
     },
-    stats: [
-      { value: "Mentorias", label: "Acompanhamento próximo" },
-      { value: "Cursos", label: "Formação prática" },
-      { value: "Autoridade", label: "Posicionamento premium" },
-    ],
+    ctaLabel: "Conheça a Charão Educacional",
     photoAlt: "Sócios responsáveis pela Charão Educacional",
     photoSrc: "/FOTO.png",
     photoFit: "contain",
@@ -240,19 +272,46 @@ export default function EmpresasImersivasSection() {
                 </h2>
 
                 {empresa.subheadline && (
-                  <p className="mt-3 max-w-xl text-pretty text-xl font-medium leading-snug text-white/85">
+                  <p className="mt-3 max-w-xl text-pretty text-xl font-medium leading-snug text-white">
                     {empresa.subheadline}
                   </p>
                 )}
 
-                <p className="mt-6 max-w-xl text-pretty text-lg leading-relaxed text-white/75">
-                  {empresa.paragraph}
+                <p className="mt-6 max-w-xl text-pretty text-lg leading-relaxed text-white">
+                  {realcar(empresa.paragraph, empresa.highlights)}
                 </p>
 
                 {empresa.paragraph2 && (
-                  <p className="mt-4 max-w-xl text-pretty text-lg leading-relaxed text-white/75">
-                    {empresa.paragraph2}
+                  <p className="mt-4 max-w-xl text-pretty text-lg leading-relaxed text-white">
+                    {realcar(empresa.paragraph2, empresa.highlights)}
                   </p>
+                )}
+
+                {empresa.paragraph3 && (
+                  <p className="mt-4 max-w-xl text-pretty text-lg leading-relaxed text-white">
+                    {realcar(empresa.paragraph3, empresa.highlights)}
+                  </p>
+                )}
+
+                {/* Frentes de atuação em linha, separadas por um filete no tom
+                    de destaque (o "|" do briefing, tipografado). */}
+                {empresa.frentes && (
+                  <ul className="mt-8 flex max-w-xl flex-wrap items-center gap-x-4 gap-y-2">
+                    {empresa.frentes.map((frente, i) => (
+                      <li key={frente} className="flex items-center gap-4">
+                        {i > 0 && (
+                          <span
+                            aria-hidden
+                            style={{ backgroundColor: theme.highlight }}
+                            className="h-4 w-px opacity-60"
+                          />
+                        )}
+                        <span className="text-base font-semibold text-white">
+                          {frente}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
                 )}
 
                 {/* TODO: substituir "#" pelo link do subdomínio da empresa
@@ -277,7 +336,7 @@ export default function EmpresasImersivasSection() {
                       {empresa.checklist.items.map((item) => (
                         <li
                           key={item}
-                          className="flex items-start gap-2 text-sm leading-snug text-white/75"
+                          className="flex items-start gap-2 text-sm leading-snug text-white"
                         >
                           <Check
                             className="mt-0.5 h-4 w-4 shrink-0"
@@ -294,10 +353,10 @@ export default function EmpresasImersivasSection() {
                       </p>
                     )}
                   </div>
-                ) : (
+                ) : empresa.stats ? (
                   /* Indicadores da frente */
                   <dl className="mt-12 grid max-w-xl grid-cols-3 gap-6 border-t border-white/10 pt-8">
-                    {empresa.stats?.map((stat) => (
+                    {empresa.stats.map((stat) => (
                       <div key={stat.value}>
                         <dt className="text-sm font-semibold text-white">
                           {stat.value}
@@ -308,7 +367,7 @@ export default function EmpresasImersivasSection() {
                       </div>
                     ))}
                   </dl>
-                )}
+                ) : null}
               </div>
 
               {/* Coluna direita — glass card do sócio */}

@@ -1,7 +1,7 @@
 export default function VideoSection() {
   return (
     <section
-      id="servicos"
+      id="empresas-servicos"
       className="relative overflow-hidden bg-areia-50 py-14 lg:py-16"
     >
       {/* Atmosfera: brilho radial em tom de areia */}
@@ -17,10 +17,10 @@ export default function VideoSection() {
         <h2 className="mt-6 text-balance text-4xl font-light leading-[1.08] text-carvao sm:text-5xl lg:text-[3.4rem]">
           Conheça o <span className="font-medium text-carvao">Grupo Charão</span>
         </h2>
-        <p className="mx-auto mt-6 max-w-xl text-pretty text-lg leading-relaxed text-carvao/60">
-          Uma visão sobre nossa atuação, especialização e a trajetória
-          construída na prática, ao lado de empresas que enfrentam ambientes
-          fiscais de maior complexidade.
+        <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-relaxed text-carvao/60">
+          Um ecossistema formado por três empresas, construído no Norte para
+          integrar conhecimento, proximidade e soluções que acompanham a
+          evolução de empresas e empresários.
         </p>
       </div>
     </section>

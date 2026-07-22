@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Logo from "@/components/Logo";
+import { navLinks } from "@/lib/nav";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -21,14 +22,40 @@ export default function Header() {
           : "border-transparent bg-transparent text-white"
       }`}
     >
-      <div className="mx-auto flex max-w-container items-center justify-between px-6 pb-5 pt-7 lg:px-10 lg:pb-6 lg:pt-9">
+      <div className="relative mx-auto flex max-w-container items-center justify-between px-6 pb-5 pt-7 lg:px-10 lg:pb-6 lg:pt-9">
         <Logo dark={scrolled} />
 
-        <a
-          href="#contato"
-          className="rounded-full bg-areia-400 px-5 py-2.5 text-sm font-medium text-carvao transition-colors hover:bg-areia-300"
+        {/* Pílula de navegação central — cápsula flutuante translúcida,
+            só a partir de lg (6 itens não cabem em telas estreitas). */}
+        <nav
+          className={`absolute left-1/2 hidden -translate-x-1/2 items-center gap-5 rounded-full px-5 py-3 text-[13px] backdrop-blur-md transition-colors duration-300 lg:flex xl:gap-7 xl:px-8 xl:text-[15px] ${
+            scrolled ? "bg-carvao/5" : "bg-white/10"
+          }`}
         >
-          Agendar conversa
+          {navLinks.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              className={`whitespace-nowrap transition-colors ${
+                scrolled
+                  ? "text-carvao/80 hover:text-carvao"
+                  : "text-white/90 hover:text-white"
+              }`}
+            >
+              {link.label}
+            </a>
+          ))}
+        </nav>
+
+        {/* Botão superior (brief Sessão 1): "Converse com um consultor" →
+            link externo do comercial. */}
+        <a
+          href="https://bit.ly/eduardocomercial1"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="whitespace-nowrap rounded-full bg-laranja-500 px-5 py-2.5 text-sm font-semibold text-marinho-950 transition-colors hover:bg-laranja-300"
+        >
+          Converse com um consultor
         </a>
       </div>
     </header>
