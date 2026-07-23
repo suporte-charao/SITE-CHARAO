@@ -1,4 +1,5 @@
 import FaqAccordion from "@/components/FaqAccordion";
+import Reveal from "@/components/ui/Reveal";
 
 const faqItems = [
   {
@@ -54,24 +55,31 @@ export default function FaqSection() {
           {/* Coluna esquerda fixa enquanto a lista rola: com 8 perguntas, o
               título sairia de tela e o CTA ficaria órfão lá em cima. */}
           <div className="lg:sticky lg:top-32 lg:self-start">
-            <h2 className="text-4xl font-light text-carvao sm:text-5xl">
-              Perguntas frequentes
-            </h2>
-            <p className="mt-5 text-pretty text-base leading-relaxed text-carvao/60">
-              Encontre respostas sobre a atuação, as soluções e a forma de
-              trabalho do Grupo Charão.
-            </p>
+            {/* Título ENTRA por trás da máscara; apoio e CTA na sequência. */}
+            <Reveal variant="mask-up">
+              <h2 className="text-4xl font-light text-carvao sm:text-5xl">
+                Perguntas frequentes
+              </h2>
+            </Reveal>
+            <Reveal delay={150}>
+              <p className="mt-5 text-pretty text-base leading-relaxed text-carvao/60">
+                Encontre respostas sobre a atuação, as soluções e a forma de
+                trabalho do Grupo Charão.
+              </p>
 
-            <a
-              href="https://bit.ly/eduardocomercial1"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-9 inline-flex w-fit items-center rounded-full bg-laranja-500 px-8 py-3.5 text-sm font-semibold text-marinho-950 transition-colors hover:bg-laranja-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-laranja-500"
-            >
-              Fale com um consultor Charão
-            </a>
+              <a
+                href="https://bit.ly/eduardocomercial1"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-9 inline-flex w-fit items-center rounded-full bg-laranja-500 px-8 py-3.5 text-sm font-semibold text-marinho-950 transition-colors hover:bg-laranja-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-laranja-500"
+              >
+                Fale com um consultor Charão
+              </a>
+            </Reveal>
           </div>
-          <FaqAccordion items={faqItems} />
+          <Reveal variant="zoom" delay={200}>
+            <FaqAccordion items={faqItems} />
+          </Reveal>
         </div>
       </div>
     </section>

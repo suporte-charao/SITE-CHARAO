@@ -1,4 +1,5 @@
 import { Logos3, type Logo } from "@/components/ui/logos3";
+import Reveal from "@/components/ui/Reveal";
 
 /**
  * Clientes na ordem numérica dos arquivos de /public/LOGO CLIENTES.
@@ -21,12 +22,15 @@ const clientes: Logo[] = [
   { id: "9", name: "Conde do Pão", image: "9.jpg" },
   { id: "10", name: "Parima", image: "10.jpg", pad: "tight" },
   { id: "11", name: "Amazon Industrial", image: "11.jpg", bleed: true },
-  { id: "12", name: "Lindopan", image: "12.jpg" },
+  // Recortado das margens brancas enormes do original (505x450 -> 340x340).
+  { id: "12", name: "Lindopan", image: "/lindopan-fit.png" },
   { id: "13", name: "Agroam", image: "13.png" },
   { id: "14", name: "Fennix", image: "14.png" },
   { id: "15", name: "Portal Vidros", image: "15.jpg" },
-  { id: "16", name: "Rede Agro", image: "16.jpg", pad: "loose" },
-  { id: "17", name: "Techfrio", image: "17.png" },
+  // Fundo cinza (222) do original virou branco puro — sem borda no medalhão.
+  { id: "16", name: "Rede Agro", image: "/rede-agro-clean.png" },
+  // Recortado das margens verticais enormes (169x299 -> 156x156).
+  { id: "17", name: "Techfrio", image: "/techfrio-fit.png" },
   { id: "18", name: "Globarium", image: "18.jpg", pad: "tight" },
   { id: "19", name: "Ortoclin", image: "19.jpg", bleed: true },
   { id: "20", name: "União Center", image: "20.jpg", bleed: true },
@@ -35,26 +39,36 @@ const clientes: Logo[] = [
   { id: "23", name: "3A", image: "23.jpg", bleed: true },
 ];
 
-// A pasta tem espaço no nome — precisa vir codificado na URL.
+// A pasta tem espaço no nome — precisa vir codificado na URL. Arquivos já
+// com caminho absoluto (começam com "/") são versões tratadas na raiz de
+// /public e passam direto, sem o prefixo da pasta.
 const logos: Logo[] = clientes.map((cliente) => ({
   ...cliente,
   id: `cliente-${cliente.id}`,
-  image: `/LOGO%20CLIENTES/${cliente.image}`,
+  image: cliente.image.startsWith("/")
+    ? cliente.image
+    : `/LOGO%20CLIENTES/${cliente.image}`,
 }));
 
 export default function ClientesSection() {
   return (
     <section id="clientes" className="bg-white py-24 lg:py-32">
       <div className="mx-auto max-w-container px-6 text-center lg:px-10">
-        <h2 className="text-balance text-3xl font-light text-carvao sm:text-4xl">
-          Empresas que confiam no Grupo Charão
-        </h2>
+        {/* Entrada encenada: o título SOBE por trás da máscara; o subtítulo
+            chega logo atrás, em fade — a leitura é de cortina, não de fade. */}
+        <Reveal variant="mask-up">
+          <h2 className="text-balance text-3xl font-light text-carvao sm:text-4xl">
+            Empresas que confiam no Grupo Charão
+          </h2>
+        </Reveal>
 
-        <p className="mx-auto mt-5 max-w-2xl text-pretty text-base leading-relaxed text-carvao/70 lg:text-lg">
-          Indústria, distribuição, varejo e serviços escolhem o Grupo Charão
-          para fortalecer a gestão, tomar decisões mais seguras e crescer com
-          consistência.
-        </p>
+        <Reveal delay={140}>
+          <p className="mx-auto mt-5 max-w-2xl text-pretty text-base leading-relaxed text-carvao/70 lg:text-lg">
+            Indústria, distribuição, varejo e serviços escolhem o Grupo Charão
+            para fortalecer a gestão, tomar decisões mais seguras e crescer com
+            consistência.
+          </p>
+        </Reveal>
       </div>
 
       {/* Esteira full-bleed: os logos entram e saem pelas bordas da tela. */}

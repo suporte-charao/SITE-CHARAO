@@ -1,6 +1,15 @@
 import Image from "next/image";
+import Reveal from "@/components/ui/Reveal";
 
-const GOLD = "#C5A059";
+/* Paleta oficial da Charão CONSULTORIA (marinho): fundo azul-marinho, acento
+   turquesa (teal) e apoio bege (tan). Substitui o preto + dourado anterior. */
+const NAVY = "#152031"; // marinho-900 (base)
+const TEAL = "#17B1AB"; // marinho.teal (acento principal)
+const TAN = "#C7A78F"; // marinho.tan (acento de apoio)
+
+/* Ruído fractal sutil (data URI) para tirar o banding do gradiente. */
+const NOISE =
+  "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E\")";
 
 type Premio = {
   id: string;
@@ -28,13 +37,10 @@ const premios: Premio[] = [
       { valor: "4º", rotulo: "lugar · Pequenas Empresas" },
       { valor: "Top 150", rotulo: "pequenas empresas do Brasil" },
     ],
-    /* TODO: entram aqui o SELO GPTW 2026 e o GPTW NACIONAL assim que os
-       arquivos chegarem. O /badges/gptw.webp NÃO serve: é o logotipo da
-       marca GPTW (quadrado vermelho), não um selo de certificação. */
     selos: [
       {
-        src: "/Selo-Pequenas-Empresas-Horizontal-2025.png",
-        alt: "Selo Great Place To Work — Melhores Empresas Para Trabalhar, Pequenas Empresas, Brasil 2025",
+        src: "/gptw2026.png",
+        alt: "Selo Great Place To Work Certificada — Brasil, Jul 2026 a Jul 2027",
       },
     ],
   },
@@ -56,48 +62,79 @@ export default function PremiosSection() {
   return (
     <section
       id="premios"
-      className="relative isolate overflow-hidden bg-[#050505] py-24 text-white lg:py-32"
+      className="relative isolate overflow-hidden bg-marinho-900 py-24 text-white lg:py-32"
     >
-      {/* Vinheta dourada vinda do topo, na direção de arte das demais
-          seções escuras. */}
+      {/* Gradiente diagonal do marinho — base viva, sem cor lisa. */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 -z-10"
         style={{
           background:
-            "radial-gradient(65% 50% at 50% 0%, rgba(197,160,89,0.13), transparent 72%)",
+            "linear-gradient(155deg, #0E151D 0%, #152031 45%, #1B2942 78%, #22314C 100%)",
+        }}
+      />
+      {/* Luz turquesa ambiente vinda do topo. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10"
+        style={{
+          background:
+            "radial-gradient(65% 50% at 50% 0%, rgba(23,177,171,0.14), transparent 72%)",
+        }}
+      />
+      {/* Ruído finíssimo (~3,5%). */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10 opacity-[0.035] mix-blend-soft-light"
+        style={{ backgroundImage: NOISE, backgroundSize: "140px 140px" }}
+      />
+      {/* Vinheta fechando as bordas. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 -z-10"
+        style={{
+          background:
+            "radial-gradient(120% 130% at 50% 40%, transparent 58%, rgba(0,0,0,0.4) 100%)",
         }}
       />
 
       <div className="mx-auto max-w-container px-6 lg:px-10">
         <header className="mx-auto max-w-3xl text-center">
-          <span
-            aria-hidden
-            className="mx-auto block h-px w-24"
-            style={{
-              background: `linear-gradient(to right, transparent, ${GOLD}, transparent)`,
-            }}
-          />
-          <h2 className="mt-7 text-balance text-3xl font-light leading-tight sm:text-4xl lg:text-[2.7rem]">
-            Reconhecimentos que validam nossa trajetória
-          </h2>
-          <p className="mt-6 text-pretty text-base leading-relaxed text-white/70 lg:text-lg">
-            Nosso compromisso com pessoas, inovação, excelência técnica e
-            resultados é reconhecido por prêmios regionais, nacionais e
-            internacionais.
-          </p>
+          <Reveal>
+            <span
+              aria-hidden
+              className="mx-auto block h-px w-24"
+              style={{
+                background: `linear-gradient(to right, transparent, ${TEAL}, ${TAN}, transparent)`,
+              }}
+            />
+          </Reveal>
+          {/* Título SOBE por trás da máscara; o apoio chega em seguida. */}
+          <Reveal variant="mask-up" delay={80} className="mt-7">
+            <h2 className="text-balance text-3xl font-light leading-tight sm:text-4xl lg:text-[2.7rem]">
+              Reconhecimentos que validam nossa trajetória
+            </h2>
+          </Reveal>
+          <Reveal delay={220}>
+            <p className="mt-6 text-pretty text-base leading-relaxed text-white/70 lg:text-lg">
+              Nosso compromisso com pessoas, inovação, excelência técnica e
+              resultados é reconhecido por prêmios regionais, nacionais e
+              internacionais.
+            </p>
+          </Reveal>
         </header>
 
         <div className="mt-16 lg:mt-20">
           {premios.map((premio, i) => (
-            <article key={premio.id} className="group relative">
-              {/* Fio dourado separando as placas (não antes da primeira). */}
+            <Reveal key={premio.id} variant="zoom" delay={i * 120}>
+            <article className="group relative">
+              {/* Fio turquesa separando as placas (não antes da primeira). */}
               {i > 0 && (
                 <span
                   aria-hidden
                   className="my-12 block h-px w-full lg:my-16"
                   style={{
-                    background: `linear-gradient(to right, transparent, ${GOLD}55 25%, ${GOLD}55 75%, transparent)`,
+                    background: `linear-gradient(to right, transparent, ${TEAL}55 25%, ${TEAL}55 75%, transparent)`,
                   }}
                 />
               )}
@@ -109,7 +146,7 @@ export default function PremiosSection() {
                     aria-hidden
                     className="pointer-events-none absolute inset-0 -z-10 opacity-60 blur-2xl transition-opacity duration-700 group-hover:opacity-100"
                     style={{
-                      background: `radial-gradient(50% 50% at 50% 50%, ${GOLD}33, transparent 70%)`,
+                      background: `radial-gradient(50% 50% at 50% 50%, ${TEAL}30, transparent 70%)`,
                     }}
                   />
                   <div className="flex flex-wrap items-center justify-center gap-8">
@@ -119,8 +156,8 @@ export default function PremiosSection() {
                         src={selo.src}
                         alt={selo.alt}
                         width={360}
-                        height={360}
-                        className="h-32 w-auto object-contain transition-transform duration-500 ease-out group-hover:scale-[1.04] lg:h-36"
+                        height={509}
+                        className="h-44 w-auto object-contain transition-transform duration-500 ease-out group-hover:scale-[1.04] lg:h-52"
                       />
                     ))}
                   </div>
@@ -140,11 +177,11 @@ export default function PremiosSection() {
                         <div
                           key={d.rotulo}
                           className="border-l pl-4"
-                          style={{ borderColor: `${GOLD}59` }}
+                          style={{ borderColor: `${TAN}66` }}
                         >
                           <dt
                             className="text-2xl font-semibold leading-none"
-                            style={{ color: GOLD }}
+                            style={{ color: TEAL }}
                           >
                             {d.valor}
                           </dt>
@@ -158,6 +195,7 @@ export default function PremiosSection() {
                 </div>
               </div>
             </article>
+            </Reveal>
           ))}
         </div>
       </div>

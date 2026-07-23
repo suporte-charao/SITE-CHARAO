@@ -1,9 +1,12 @@
 import Image from "next/image";
+import Reveal from "@/components/ui/Reveal";
 
 export default function CtaContatoSection() {
   return (
     <section id="contato" className="bg-white pb-24 pt-8 lg:pb-32">
-      <div className="mx-auto max-w-container px-6 lg:px-10">
+      {/* O card escuro é REVELADO por varredura lateral (wipe) — a entrada
+          mais teatral fica para o convite final da página. */}
+      <Reveal variant="wipe" className="mx-auto max-w-container px-6 lg:px-10">
         <div className="overflow-hidden rounded-3xl bg-carvao lg:grid lg:grid-cols-2">
           <div className="flex flex-col justify-center p-8 lg:p-14">
             <h2 className="text-balance text-3xl font-light leading-tight text-white sm:text-4xl">
@@ -33,7 +36,7 @@ export default function CtaContatoSection() {
             />
           </div>
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }

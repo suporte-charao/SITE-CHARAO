@@ -5,10 +5,10 @@ const GOLD = "#C5A059";
 
 const seals = [
   {
-    src: "/Selo-Pequenas-Empresas-Horizontal-2025.png",
-    alt: "Selo Great Place To Work — Melhores Empresas Para Trabalhar, Pequenas Empresas, Brasil 2025",
-    width: 854,
-    height: 900,
+    src: "/gptw2026.png",
+    alt: "Selo Great Place To Work Certificada — Brasil, Jul 2026 a Jul 2027",
+    width: 1055,
+    height: 1491,
   },
   {
     src: "/badges/ranked-firm.png",

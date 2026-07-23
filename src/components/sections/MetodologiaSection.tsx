@@ -1,3 +1,5 @@
+import Reveal from "@/components/ui/Reveal";
+
 /**
  * Sessão 5 — Metodologia Charão.
  *
@@ -228,18 +230,20 @@ export default function MetodologiaSection() {
       />
 
       <div className="mx-auto max-w-container px-6 lg:px-10">
-        {/* Título com o filete verde da referência. */}
-        <div className="flex items-center gap-5">
-          <span
-            aria-hidden
-            className="h-10 w-1 rounded-full bg-tributario-300"
-          />
-          <h2 className="text-3xl font-semibold tracking-tight text-tributario-300 sm:text-4xl">
-            Metodologia Charão
-          </h2>
-        </div>
+        {/* Título ENTRANDO por trás da máscara; parágrafos deslizam atrás. */}
+        <Reveal variant="mask-up">
+          <div className="flex items-center gap-5">
+            <span
+              aria-hidden
+              className="h-10 w-1 rounded-full bg-tributario-300"
+            />
+            <h2 className="text-3xl font-semibold tracking-tight text-tributario-300 sm:text-4xl">
+              Metodologia Charão
+            </h2>
+          </div>
+        </Reveal>
 
-        <div className="mt-7 max-w-3xl space-y-4">
+        <Reveal delay={140} className="mt-7 max-w-3xl space-y-4">
           <p className="text-pretty text-base leading-relaxed text-white lg:text-lg">
             A Metodologia Charão conecta pessoas especializadas, processos ágeis
             e seguros e tecnologia aplicada à gestão. Utilizamos os melhores ERPs
@@ -251,11 +255,12 @@ export default function MetodologiaSection() {
             Assim, transformamos informações em conhecimento, estratégia e
             decisões que geram resultados consistentes.
           </p>
-        </div>
+        </Reveal>
 
         {/* Diagrama: pirâmide à esquerda, os três patamares descritos à
-            direita — a mesma leitura da arte original do cliente. */}
-        <div className="mt-14 grid items-center gap-10 lg:mt-16 lg:grid-cols-[minmax(0,420px)_1fr] lg:gap-16">
+            direita — a mesma leitura da arte original do cliente. O bloco
+            ASSENTA de uma escala levemente maior (zoom). */}
+        <Reveal variant="zoom" delay={120} className="mt-14 grid items-center gap-10 lg:mt-16 lg:grid-cols-[minmax(0,420px)_1fr] lg:gap-16">
           <div className="mx-auto w-full max-w-[420px]">
             <Piramide />
           </div>
@@ -278,11 +283,11 @@ export default function MetodologiaSection() {
               </li>
             ))}
           </ul>
-        </div>
+        </Reveal>
 
         {/* Sistemas utilizados — painel em marinho um tom acima do fundo da
             seção, com os logos em medalhões brancos, como na referência. */}
-        <div className="mt-16 lg:mt-20">
+        <Reveal variant="zoom" delay={90} className="mt-16 lg:mt-20">
           <h3 className="text-center text-xl font-semibold tracking-tight text-white sm:text-2xl">
             Sistemas utilizados para a Metodologia Charão
           </h3>
@@ -324,7 +329,7 @@ export default function MetodologiaSection() {
               ))}
             </ul>
           </div>
-        </div>
+        </Reveal>
 
         {/* CTA de fecho da seção → volta para "Conheça o Grupo Charão",
             onde a metodologia aparece aplicada em cada empresa. Verde da
