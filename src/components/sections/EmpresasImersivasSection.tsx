@@ -59,6 +59,14 @@ type Empresa = {
    * enquadramento já foi ajustado manualmente e precisa ser preservado.
    */
   photoFit?: "cover" | "contain";
+  /**
+   * Proporção do card (largura/altura), no formato aceito por CSS aspect-ratio.
+   * Padrão: "2560 / 2469" (quase quadrado, igual às 3 frentes). Use a
+   * proporção REAL do arquivo quando ele for um retrato bem mais alto/estreito
+   * que o padrão — senão, com object-contain, sobram faixas vazias nas
+   * laterais (o card fica maior que a foto).
+   */
+  photoAspect?: string;
   icon: LucideIcon;
   theme: {
     bg: string;
@@ -129,8 +137,17 @@ const empresas: Empresa[] = [
       "Metodologia Charão": "#DFC4AE",
     },
     ctaLabel: "Conheça a Charão Consultoria",
-    photoAlt: "Sócio responsável pela Charão Consultoria",
-    photoSrc: "/socio-consultoria.jpg",
+    photoAlt: "Equipe responsável pela Charão Consultoria",
+    photoSrc: "/contabil.png",
+    // As 3 pessoas ocupam a largura toda da foto (720x899); com object-cover
+    // num card quase quadrado a pessoa da esquerda ficava cortada na borda.
+    photoFit: "contain",
+    // Proporção REAL do arquivo (720/899): sem isso, o card ficava no padrão
+    // quase-quadrado das outras frentes e sobravam faixas pretas vazias nas
+    // laterais da foto (retrato, mais alta e estreita). Com o card na mesma
+    // proporção da imagem, ela preenche 100% do card — sem sobra e sem
+    // cortar ninguém.
+    photoAspect: "720 / 899",
     icon: TrendingUp,
     theme: {
       bg: "#0B132B",
@@ -177,8 +194,13 @@ const empresas: Empresa[] = [
     },
     ctaLabel: "Saiba mais sobre a Charão Tributário",
     ctaHref: "https://mentoria.charaoconsultoria.com/",
-    photoAlt: "Sócia responsável pela Charão Tributário",
-    photoSrc: "/021A6502.jpg",
+    photoAlt: "Sócias responsáveis pela Charão Tributário",
+    photoSrc: "/tributário.png",
+    // Mesma lógica da Consultoria: aspectRatio na proporção REAL do arquivo
+    // (1122x1402) para a foto preencher o card por completo, sem sobra nas
+    // laterais e sem cortar ninguém das duas sócias.
+    photoFit: "contain",
+    photoAspect: "1122 / 1402",
     icon: Scale,
     theme: {
       bg: "#27AE60",
@@ -215,8 +237,13 @@ const empresas: Empresa[] = [
     },
     ctaLabel: "Conheça a Charão Educacional",
     photoAlt: "Sócios responsáveis pela Charão Educacional",
-    photoSrc: "/FOTO.png",
+    photoSrc: "/educ.png",
     photoFit: "contain",
+    // Mesma lógica da Consultoria e do Tributário: aspectRatio na proporção
+    // REAL do arquivo para a foto preencher o card por completo, sem sobra e
+    // sem cortar ninguém das 3 pessoas. Arquivo atualizado com um recorte
+    // mais largo (1122x1402 — mesma proporção do Tributário, era 1023x1537).
+    photoAspect: "1122 / 1402",
     icon: GraduationCap,
     theme: {
       bg: "#1A1A1A",
@@ -393,8 +420,10 @@ export default function EmpresasImersivasSection() {
                         : theme.photoGradient,
                       // Proporção padrão dos 3 cards — igual à foto da Educacional
                       // (a única sem sobra de fundo em volta), aplicada às 3 frentes
-                      // para manter o mesmo tamanho de card em todas.
-                      aspectRatio: "2560 / 2469",
+                      // para manter o mesmo tamanho de card em todas. Uma frente
+                      // pode sobrescrever via `photoAspect` quando o arquivo é um
+                      // retrato com proporção bem diferente (ver Consultoria).
+                      aspectRatio: empresa.photoAspect ?? "2560 / 2469",
                     }}
                     className="relative w-full bg-cover bg-center"
                   >

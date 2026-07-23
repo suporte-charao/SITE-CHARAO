@@ -75,7 +75,12 @@ export default function HeroSection() {
         <div className="relative z-20 max-w-xl">
           {/* Tipografia do Figma: peso REGULAR (não medium) em corpo grande,
               entrelinha ~1.16 — o look "editorial leve" da referência. */}
-          <h1 className="hero-in-title max-w-none text-balance text-[2rem] font-normal leading-[1.18] tracking-tight text-white [text-shadow:0_2px_18px_rgba(0,0,0,0.55)] sm:text-[2.5rem] lg:w-[34rem] lg:text-[3rem] lg:leading-[1.16]">
+          {/* lg:text-[32px]: o texto atual é mais longo que a versão anterior
+              e, com a coluna limitada a ~528px (antes de esbarrar na foto),
+              48px (3rem) fazia 3 das 4 linhas quebrarem em duas — medido
+              pixel a pixel no navegador. 32px é o maior tamanho que ainda
+              fecha nas 4 linhas pedidas dentro do espaço real disponível. */}
+          <h1 className="hero-in-title max-w-none text-balance text-[2rem] font-normal leading-[1.18] tracking-tight text-white [text-shadow:0_2px_18px_rgba(0,0,0,0.55)] sm:text-[2.5rem] lg:w-[33rem] lg:text-[32px] lg:leading-[1.22]">
             {/* Quebras manuais no desktop (lg:block), calibradas para larguras
                 de linha equilibradas (bloco visualmente organizado, sem
                 recorrer a text-justify); no mobile os spans ficam inline e o
@@ -84,13 +89,19 @@ export default function HeroSection() {
             <span className="lg:block">
               <span className="text-tributario-300">inteligência tributária</span> e
             </span>{" "}
-            <span className="lg:block">educação empresarial em segurança,</span>{" "}
+            <span className="lg:block">
+              <span className="text-laranja-300">educação empresarial</span> em
+              segurança,
+            </span>{" "}
             <span className="lg:block">
               eficiência e <span className="text-tributario-300">proteção do lucro</span>.
             </span>
           </h1>
 
-          <p className="hero-in-sub mt-6 max-w-md text-pretty text-base leading-relaxed text-white lg:text-lg">
+          {/* Texto completo. No desktop 17px (1px abaixo do padrão lg:text-lg)
+              já fecha em 4 linhas dentro da coluna de ~528px — medido pixel a
+              pixel; sem essa calibragem o texto quebrava em 5 linhas. */}
+          <p className="hero-in-sub mt-6 max-w-md text-pretty text-base leading-relaxed text-white lg:max-w-[33rem] lg:text-[17px]">
             Unimos 19 anos de expertise na Zona Franca de Manaus e na Área de
             Livre Comércio de Boa Vista para dominar as complexidades do Lucro
             Real e da Reforma Tributária, garantindo segurança e crescimento

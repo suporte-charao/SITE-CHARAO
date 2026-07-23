@@ -142,28 +142,31 @@ export default function MetodologiaSection() {
           </p>
         </Reveal>
 
-        {/* Diagrama: a pirâmide tem a PRÓPRIA animação de montagem + rotação
-            (por isso não recebe Reveal, para não conflitar). Os patamares à
-            direita entram pela DIREITA. */}
-        <div className="mt-14 grid items-center gap-10 lg:mt-16 lg:grid-cols-[minmax(0,420px)_1fr] lg:gap-16">
-          <div className="mx-auto w-full max-w-[420px]">
+        {/* Diagrama: pirâmide e patamares LADO A LADO desde o mobile — pedido
+            explícito do cliente (o padrão usual seria empilhar no mobile e só
+            virar 2 colunas no desktop; aqui é 2 colunas sempre, só a largura
+            da coluna da pirâmide que cresce em lg). A pirâmide tem a PRÓPRIA
+            animação de montagem + rotação (por isso não recebe Reveal, para
+            não conflitar). Os patamares entram pela DIREITA. */}
+        <div className="mt-10 grid grid-cols-[minmax(0,132px)_1fr] items-center gap-4 sm:grid-cols-[minmax(0,180px)_1fr] sm:gap-6 lg:mt-16 lg:grid-cols-[minmax(0,420px)_1fr] lg:gap-16">
+          <div className="mx-auto w-full">
             <PiramideMontagem />
           </div>
 
           <Reveal variant="slide-right" delay={160}>
-            <ul className="space-y-5">
+            <ul className="space-y-3 sm:space-y-5">
               {patamares.map((p) => (
                 <li
                   key={p.id}
-                  className="rounded-xl border border-white/15 bg-white/[0.03] px-7 py-6"
+                  className="rounded-xl border border-white/15 bg-white/[0.03] px-4 py-3.5 sm:px-7 sm:py-6"
                 >
                   <h3
-                    className="text-lg font-bold tracking-tight"
+                    className="text-sm font-bold tracking-tight sm:text-lg"
                     style={{ color: p.cor }}
                   >
                     {p.titulo}
                   </h3>
-                  <p className="mt-2 text-sm leading-relaxed text-white/85">
+                  <p className="mt-1 text-xs leading-relaxed text-white/85 sm:mt-2 sm:text-sm">
                     {p.atributos}
                   </p>
                 </li>

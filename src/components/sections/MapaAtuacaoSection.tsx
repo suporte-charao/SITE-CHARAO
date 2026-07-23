@@ -24,15 +24,14 @@ const NAVY_SOFT = "#3E4A63";
 const MARINHO = "#152031";
 const AMBER_DOT = "#C4883A";
 
-/* Verdes da faixa de setores, agora na PALETA OFICIAL da marca — os mesmos
-   tons da seção "Nossa história", para as duas áreas verdes do site
-   conversarem:
-     célula        tributario-900  #0D3731   (bg-[#0D3731] no JSX)
-     hover         um passo acima  #124A3F   (hover:bg-[#124A3F])
-     ícone/acento  tributario-500  #49DE7B
-     texto         tributario-100  #E8F5E1
+/* Faixa de setores em AZUL MARINHO — paleta oficial da Charão Consultoria,
+   a mesma família de cor do mapa e do título desta seção:
+     célula        marinho-900     #152031   (bg-[#152031] no JSX)
+     hover         um passo acima  #1E2E47   (hover:bg-[#1E2E47])
+     ícone/acento  marinho.teal    #17B1AB   (acento oficial da paleta)
+     texto         branco          #FFFFFF
    Só o fio divisório vira variável, porque é o único aplicado via style. */
-const SETORES_LINHA = "#1C5A4B";
+const SETORES_LINHA = "#2A3B57";
 
 /** Ícones dos setores. Mantidos FORA da array de dados: guardar o componente
  *  lucide (um objeto forwardRef) dentro de `setores` fazia o React 19 tentar
@@ -89,7 +88,7 @@ export default function MapaAtuacaoSection() {
           <Reveal variant="slide-left" delay={120}>
             <figure className="relative aspect-[16/9] w-full overflow-hidden rounded-3xl ring-1 ring-black/5 shadow-[0_24px_70px_-30px_rgba(44,40,32,0.45)]">
               <Image
-                src="/card%20zfm.png"
+                src="/zfm.png"
                 alt="Mapa da atuação do Grupo Charão: Zona Franca de Manaus (Manaus/AM) e Áreas de Livre Comércio (Boa Vista/RR)."
                 fill
                 className="object-cover object-center"
@@ -168,31 +167,31 @@ export default function MapaAtuacaoSection() {
             return (
             <li
               key={nome}
-              className="group relative isolate flex items-center gap-4 overflow-hidden bg-[#0D3731] px-7 py-6 transition-colors duration-500 ease-out hover:bg-[#124A3F] sm:px-10"
+              className="group relative isolate flex items-center gap-4 overflow-hidden bg-[#152031] px-7 py-6 transition-colors duration-500 ease-out hover:bg-[#1E2E47] sm:px-10"
             >
               {/* Varredura de luz: entra pela esquerda no hover, como se a
                   célula acendesse da margem para dentro. */}
               <span
                 aria-hidden
-                className="pointer-events-none absolute inset-0 -z-10 -translate-x-full bg-gradient-to-r from-[#49DE7B]/20 via-[#49DE7B]/[0.06] to-transparent transition-transform duration-[900ms] ease-out group-hover:translate-x-0"
+                className="pointer-events-none absolute inset-0 -z-10 -translate-x-full bg-gradient-to-r from-[#17B1AB]/20 via-[#17B1AB]/[0.06] to-transparent transition-transform duration-[900ms] ease-out group-hover:translate-x-0"
               />
 
               {/* Fio vivo desenhando a base da célula, da esquerda para a
                   direita — o "sublinhado" que confirma o hover. */}
               <span
                 aria-hidden
-                className="pointer-events-none absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-[#49DE7B] transition-transform duration-700 ease-out group-hover:scale-x-100"
+                className="pointer-events-none absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-[#17B1AB] transition-transform duration-700 ease-out group-hover:scale-x-100"
               />
 
-              {/* O ícone ganha uma moldura que acende e um halo verde. */}
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#49DE7B]/0 ring-1 ring-[#49DE7B]/20 transition-all duration-500 ease-out group-hover:bg-[#49DE7B]/10 group-hover:ring-[#49DE7B]/70 group-hover:shadow-[0_0_24px_-4px_rgba(73,222,123,0.55)]">
+              {/* O ícone ganha uma moldura que acende e um halo teal. */}
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#17B1AB]/0 ring-1 ring-[#17B1AB]/20 transition-all duration-500 ease-out group-hover:bg-[#17B1AB]/10 group-hover:ring-[#17B1AB]/70 group-hover:shadow-[0_0_24px_-4px_rgba(23,177,171,0.55)]">
                 <Icone
-                  className="h-5 w-5 text-[#49DE7B] transition-transform duration-500 ease-out group-hover:scale-110"
+                  className="h-5 w-5 text-[#17B1AB] transition-transform duration-500 ease-out group-hover:scale-110"
                   strokeWidth={1.75}
                 />
               </span>
 
-              <span className="text-[15px] font-semibold text-[#E8F5E1] transition-transform duration-500 ease-out group-hover:translate-x-1">
+              <span className="text-[15px] font-semibold text-white transition-transform duration-500 ease-out group-hover:translate-x-1">
                 {nome}
               </span>
             </li>
