@@ -53,9 +53,11 @@ export default function Header() {
           href="https://bit.ly/eduardocomercial1"
           target="_blank"
           rel="noopener noreferrer"
-          className="whitespace-nowrap rounded-full bg-laranja-500 px-5 py-2.5 text-sm font-semibold text-marinho-950 transition-colors hover:bg-laranja-300"
+          className="whitespace-nowrap rounded-full bg-laranja-500 px-3.5 py-2 text-[13px] font-semibold text-marinho-950 transition-colors hover:bg-laranja-300 sm:px-5 sm:py-2.5 sm:text-sm"
         >
-          Converse com um consultor
+          {/* No mobile estreito o rótulo completo empurra o logo — encurta. */}
+          <span className="sm:hidden">Converse</span>
+          <span className="hidden sm:inline">Converse com um consultor</span>
         </a>
       </div>
     </header>
