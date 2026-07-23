@@ -1,4 +1,5 @@
 import Reveal from "@/components/ui/Reveal";
+import PiramideMontagem from "@/components/ui/PiramideMontagem";
 
 /**
  * Sessão 5 — Metodologia Charão.
@@ -16,62 +17,6 @@ import Reveal from "@/components/ui/Reveal";
  * topo de um patamar é sempre mais largo que a base do de cima: é essa
  * diferença que forma o degrau.
  */
-
-const CX = 320;
-/* Profundidade aparente medida na arte de referência: o bico frontal da base
-   cai 0.414 × semilargura abaixo da linha dos cantos laterais. */
-const D = 0.414;
-
-const frente = (y: number, w: number) => y + w * D;
-const tras = (y: number, w: number) => y - w * D;
-
-/**
- * Cortes da pirâmide: [y, semilargura]. Os valores saíram da medição da arte
- * de referência (larguras e alturas de cada patamar), reescalados para este
- * viewBox — daí o ápice alto e esguio e os degraus estreitos.
- */
-const CORTES = {
-  apice: [27, 0],
-  base1: [218, 90],
-  topo2: [218, 115],
-  base2: [386, 186],
-  topo3: [386, 216],
-  base3: [531, 292],
-} as const;
-
-type Corte = readonly [number, number];
-
-const faceDir = ([yt, wt]: Corte, [yb, wb]: Corte) =>
-  [
-    `${CX + wt},${yt}`,
-    `${CX},${frente(yt, wt)}`,
-    `${CX},${frente(yb, wb)}`,
-    `${CX + wb},${yb}`,
-  ].join(" ");
-
-const faceEsq = ([yt, wt]: Corte, [yb, wb]: Corte) =>
-  [
-    `${CX - wt},${yt}`,
-    `${CX},${frente(yt, wt)}`,
-    `${CX},${frente(yb, wb)}`,
-    `${CX - wb},${yb}`,
-  ].join(" ");
-
-const degrau = ([y, w]: Corte) =>
-  [
-    `${CX - w},${y}`,
-    `${CX},${tras(y, w)}`,
-    `${CX + w},${y}`,
-    `${CX},${frente(y, w)}`,
-  ].join(" ");
-
-/** Realce translúcido junto à aresta central, como na arte de referência. */
-const brilhoCentral = ([yt, wt]: Corte, [yb, wb]: Corte) =>
-  [
-    `${CX},${frente(yt, wt)}`,
-    `${CX + wt * 0.55},${yt + wt * 0.18}`,
-    `${CX},${frente(yb, wb)}`,
-  ].join(" ");
 
 const patamares = [
   {
@@ -150,69 +95,6 @@ const caminhoSistema = (arquivo: string, naRaiz?: boolean) =>
     ? `/${encodeURIComponent(arquivo)}`
     : `/${encodeURIComponent("LOGO METODOLOGIA")}/${encodeURIComponent(arquivo)}`;
 
-function Piramide() {
-  const { apice, base1, topo2, base2, topo3, base3 } = CORTES;
-
-  return (
-    <svg
-      viewBox="0 0 640 680"
-      className="h-auto w-full"
-      role="img"
-      aria-label="Pirâmide da Metodologia Charão. Da base para o topo: Sistemas, Processos e Pessoas."
-    >
-      <defs>
-        <linearGradient id="luz3" x1="0" y1="0" x2="0.4" y2="1">
-          <stop offset="0" stopColor="#9BDE58" />
-          <stop offset="1" stopColor="#7CC63F" />
-        </linearGradient>
-        <linearGradient id="luz2" x1="0" y1="0" x2="0.4" y2="1">
-          <stop offset="0" stopColor="#A3E260" />
-          <stop offset="1" stopColor="#82CB44" />
-        </linearGradient>
-        <linearGradient id="luz1" x1="0" y1="0" x2="0.4" y2="1">
-          <stop offset="0" stopColor="#9BDB57" />
-          <stop offset="1" stopColor="#7BC43E" />
-        </linearGradient>
-        <linearGradient id="sombra3" x1="1" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#17685E" />
-          <stop offset="1" stopColor="#0F4B46" />
-        </linearGradient>
-        <linearGradient id="sombra2" x1="1" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#18705F" />
-          <stop offset="1" stopColor="#11544A" />
-        </linearGradient>
-        <linearGradient id="sombra1" x1="1" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor="#43A567" />
-          <stop offset="1" stopColor="#2E8450" />
-        </linearGradient>
-      </defs>
-
-      {/* Base → topo: cada patamar cobre o miolo do degrau de baixo,
-          deixando visível só a faixa em teal. */}
-      <polygon points={degrau(topo3)} fill="#1A7C74" />
-      <polygon points={faceEsq(topo3, base3)} fill="url(#sombra3)" />
-      <polygon points={faceDir(topo3, base3)} fill="url(#luz3)" />
-      <polygon
-        points={brilhoCentral(topo3, base3)}
-        fill="#ffffff"
-        opacity="0.1"
-      />
-
-      <polygon points={degrau(topo2)} fill="#1B837A" />
-      <polygon points={faceEsq(topo2, base2)} fill="url(#sombra2)" />
-      <polygon points={faceDir(topo2, base2)} fill="url(#luz2)" />
-      <polygon
-        points={brilhoCentral(topo2, base2)}
-        fill="#ffffff"
-        opacity="0.1"
-      />
-
-      <polygon points={faceEsq(apice, base1)} fill="url(#sombra1)" />
-      <polygon points={faceDir(apice, base1)} fill="url(#luz1)" />
-    </svg>
-  );
-}
-
 export default function MetodologiaSection() {
   return (
     <section
@@ -257,33 +139,35 @@ export default function MetodologiaSection() {
           </p>
         </Reveal>
 
-        {/* Diagrama: pirâmide à esquerda, os três patamares descritos à
-            direita — a mesma leitura da arte original do cliente. O bloco
-            ASSENTA de uma escala levemente maior (zoom). */}
-        <Reveal variant="zoom" delay={120} className="mt-14 grid items-center gap-10 lg:mt-16 lg:grid-cols-[minmax(0,420px)_1fr] lg:gap-16">
+        {/* Diagrama: a pirâmide tem a PRÓPRIA animação de montagem + rotação
+            (por isso não recebe Reveal, para não conflitar). Os patamares à
+            direita entram pela DIREITA. */}
+        <div className="mt-14 grid items-center gap-10 lg:mt-16 lg:grid-cols-[minmax(0,420px)_1fr] lg:gap-16">
           <div className="mx-auto w-full max-w-[420px]">
-            <Piramide />
+            <PiramideMontagem />
           </div>
 
-          <ul className="space-y-5">
-            {patamares.map((p) => (
-              <li
-                key={p.id}
-                className="rounded-xl border border-white/15 bg-white/[0.03] px-7 py-6"
-              >
-                <h3
-                  className="text-lg font-bold tracking-tight"
-                  style={{ color: p.cor }}
+          <Reveal variant="slide-right" delay={160}>
+            <ul className="space-y-5">
+              {patamares.map((p) => (
+                <li
+                  key={p.id}
+                  className="rounded-xl border border-white/15 bg-white/[0.03] px-7 py-6"
                 >
-                  {p.titulo}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-white/85">
-                  {p.atributos}
-                </p>
-              </li>
-            ))}
-          </ul>
-        </Reveal>
+                  <h3
+                    className="text-lg font-bold tracking-tight"
+                    style={{ color: p.cor }}
+                  >
+                    {p.titulo}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-white/85">
+                    {p.atributos}
+                  </p>
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+        </div>
 
         {/* Sistemas utilizados — painel em marinho um tom acima do fundo da
             seção, com os logos em medalhões brancos, como na referência. */}

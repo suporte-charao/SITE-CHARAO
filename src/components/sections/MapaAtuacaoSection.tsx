@@ -84,9 +84,9 @@ export default function MapaAtuacaoSection() {
             ocupando o espaço horizontal e ligando visual + explicação. No
             mobile, empilha na ordem natural (mapa → texto). */}
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-14">
-          {/* Card do mapa entra por VARREDURA (wipe), como se a tela o
-              abrisse; o texto chega depois, deslizando. */}
-          <Reveal variant="wipe" delay={120}>
+          {/* Mapa entra deslizando pela ESQUERDA; o texto, pela DIREITA — as
+              duas metades convergem para o centro. */}
+          <Reveal variant="slide-left" delay={120}>
             <figure className="relative aspect-[16/9] w-full overflow-hidden rounded-3xl ring-1 ring-black/5 shadow-[0_24px_70px_-30px_rgba(44,40,32,0.45)]">
               <Image
                 src="/card%20zfm.png"
@@ -99,7 +99,7 @@ export default function MapaAtuacaoSection() {
           </Reveal>
 
           {/* Cópia de apoio */}
-          <Reveal delay={260} className="lg:pl-2">
+          <Reveal variant="slide-right" delay={260} className="lg:pl-2">
             <p
               className="text-pretty text-lg leading-relaxed"
               style={{ color: NAVY_SOFT }}

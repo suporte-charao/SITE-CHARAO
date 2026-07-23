@@ -129,20 +129,22 @@ export default function Reveal({
     );
   }
 
-  const styles: React.CSSProperties =
-    variant === "zoom"
-        ? {
-            transition: `transform ${dur}ms ${EASE} ${delay}ms, opacity ${Math.round(dur * 0.65)}ms ease-out ${delay}ms`,
-            transform: hidden ? `translateY(${y}px) scale(1.04)` : "none",
-            opacity: hidden ? 0 : 1,
-            willChange: "transform",
-          }
-        : {
-            transition: `transform ${dur}ms ${EASE} ${delay}ms, opacity ${Math.round(dur * 0.7)}ms ease-out ${delay}ms`,
-            transform: hidden ? `translateY(${y}px)` : "none",
-            opacity: hidden ? 0 : 1,
-            willChange: "transform",
-          };
+  // Distância lateral: o dobro do deslize vertical dá um gesto de "entrar
+  // pela borda" nítido, sem exagerar a ponto de causar rolagem horizontal
+  // (o overflow-x da página já está contido nas seções).
+  const dx = Math.max(y * 2, 56);
+
+  let transform = `translateY(${y}px)`;
+  if (variant === "zoom") transform = `translateY(${y}px) scale(1.04)`;
+  else if (variant === "slide-left") transform = `translateX(-${dx}px)`;
+  else if (variant === "slide-right") transform = `translateX(${dx}px)`;
+
+  const styles: React.CSSProperties = {
+    transition: `transform ${dur}ms ${EASE} ${delay}ms, opacity ${Math.round(dur * 0.7)}ms ease-out ${delay}ms`,
+    transform: hidden ? transform : "none",
+    opacity: hidden ? 0 : 1,
+    willChange: "transform",
+  };
 
   return (
     <div ref={ref} className={className} style={styles}>

@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { Landmark, Play } from "lucide-react";
+import Reveal from "@/components/ui/Reveal";
 
 /**
  * Faixa de transição clara entre a Hero escura e a seção dos 19 anos.
@@ -30,40 +31,49 @@ export default function ManifestoFaixaSection() {
           claro o verde vivo (#49DE7B) ficaria ilegível — o escuro mantém a
           cor da marca com contraste alto. */}
       <div className="mx-auto max-w-4xl space-y-5 px-6 text-center text-base font-medium leading-relaxed text-gray-600 md:text-lg">
-        <p>
-          Com forte atuação na{" "}
-          <strong className="font-bold text-tributario-900">região Norte</strong>{" "}
-          e visibilidade nacional, o Grupo Charão é um ecossistema formado pela{" "}
-          <strong className="font-bold text-tributario-900">
-            Charão Consultoria
-          </strong>
-          , especializada em gestão contábil, fiscal e DP; pela{" "}
-          <strong className="font-bold text-tributario-900">
-            Charão Tributário
-          </strong>
-          , voltada à estratégia e às soluções tributárias; e pela{" "}
-          <strong className="font-bold text-tributario-900">
-            Charão Educacional
-          </strong>
-          , dedicada à educação e ao desenvolvimento empresarial.
-        </p>
-        <p>
-          Unimos 19 anos de expertise na{" "}
-          <strong className="font-bold text-tributario-900">
-            Zona Franca de Manaus e na Área de Livre Comércio de Boa Vista
-          </strong>{" "}
-          para dominar as complexidades do{" "}
-          <strong className="font-bold text-tributario-900">
-            Lucro Real e da Reforma Tributária
-          </strong>
-          , garantindo segurança e crescimento para sua empresa.
-        </p>
+        {/* Entrada vindo da DIREITA, só neste primeiro parágrafo. */}
+        <Reveal variant="slide-right">
+          <p>
+            Com forte atuação na{" "}
+            <strong className="font-bold text-tributario-900">
+              região Norte
+            </strong>{" "}
+            e visibilidade nacional, o Grupo Charão é um ecossistema formado
+            pela{" "}
+            <strong className="font-bold text-tributario-900">
+              Charão Consultoria
+            </strong>
+            , especializada em gestão contábil, fiscal e DP; pela{" "}
+            <strong className="font-bold text-tributario-900">
+              Charão Tributário
+            </strong>
+            , voltada à estratégia e às soluções tributárias; e pela{" "}
+            <strong className="font-bold text-tributario-900">
+              Charão Educacional
+            </strong>
+            , dedicada à educação e ao desenvolvimento empresarial.
+          </p>
+        </Reveal>
+        {/* Segundo parágrafo com a mesma entrada pela direita. */}
+        <Reveal variant="slide-right">
+          <p>
+            Unimos 19 anos de expertise na{" "}
+            <strong className="font-bold text-tributario-900">
+              Zona Franca de Manaus e na Área de Livre Comércio de Boa Vista
+            </strong>{" "}
+            para dominar as complexidades do{" "}
+            <strong className="font-bold text-tributario-900">
+              Lucro Real e da Reforma Tributária
+            </strong>
+            , garantindo segurança e crescimento para sua empresa.
+          </p>
+        </Reveal>
       </div>
 
       {/* Card de vídeo: poster com botão de play em moldura dourada premium.
           TODO: plugar a fonte real do vídeo (embed do YouTube/Vimeo ou <video>
           com .mp4) no clique do botão — por ora é o card estático de entrada. */}
-      <div className="mx-auto mt-12 max-w-xl px-6 md:mt-14">
+      <Reveal variant="slide-right" className="mx-auto mt-12 max-w-xl px-6 md:mt-14">
         <button
           type="button"
           aria-label="Assistir vídeo institucional do Grupo Charão"
@@ -95,7 +105,7 @@ export default function ManifestoFaixaSection() {
           </span>
 
         </button>
-      </div>
+      </Reveal>
     </section>
   );
 }

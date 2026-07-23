@@ -24,6 +24,21 @@ export default function HeroSection() {
       id="inicio"
       className="relative isolate overflow-hidden bg-[#050505]"
     >
+      {/* Entrada da Hero (SÓ título e subtítulo), no carregamento: sobem com
+          fade e um desfoque que assenta — o look editorial premium. Em CSS
+          puro (sem JS), escalonado, e desligado sob prefers-reduced-motion. */}
+      <style>{`
+        @keyframes heroIn {
+          0%   { opacity: 0; transform: translateY(30px); filter: blur(10px); }
+          100% { opacity: 1; transform: none;             filter: blur(0); }
+        }
+        .hero-in-title { animation: heroIn 1.05s cubic-bezier(0.22,1,0.36,1) 0.12s both; }
+        .hero-in-sub   { animation: heroIn 1.05s cubic-bezier(0.22,1,0.36,1) 0.42s both; }
+        @media (prefers-reduced-motion: reduce) {
+          .hero-in-title, .hero-in-sub { animation: none; opacity: 1; filter: none; transform: none; }
+        }
+      `}</style>
+
       {/* Fundo limpo (brief Sessão 1: "retirar linhas de fundo para ficar
           visivelmente mais limpo"). Sem brilho/atmosfera dourada — só um preto
           sólido com uma vinheta sutil para dar profundidade e ajudar a
@@ -60,7 +75,7 @@ export default function HeroSection() {
         <div className="relative z-20 max-w-xl">
           {/* Tipografia do Figma: peso REGULAR (não medium) em corpo grande,
               entrelinha ~1.16 — o look "editorial leve" da referência. */}
-          <h1 className="max-w-none text-balance text-[2rem] font-normal leading-[1.18] tracking-tight text-white [text-shadow:0_2px_18px_rgba(0,0,0,0.55)] sm:text-[2.5rem] lg:w-[34rem] lg:text-[3rem] lg:leading-[1.16]">
+          <h1 className="hero-in-title max-w-none text-balance text-[2rem] font-normal leading-[1.18] tracking-tight text-white [text-shadow:0_2px_18px_rgba(0,0,0,0.55)] sm:text-[2.5rem] lg:w-[34rem] lg:text-[3rem] lg:leading-[1.16]">
             {/* Quebras manuais no desktop (lg:block), calibradas para larguras
                 de linha equilibradas (bloco visualmente organizado, sem
                 recorrer a text-justify); no mobile os spans ficam inline e o
@@ -75,7 +90,7 @@ export default function HeroSection() {
             <span className="lg:block">da sua empresa.</span>
           </h1>
 
-          <p className="mt-6 max-w-md text-pretty text-base leading-relaxed text-gray-400 lg:text-lg">
+          <p className="hero-in-sub mt-6 max-w-md text-pretty text-base leading-relaxed text-white lg:text-lg">
             Lucro Real, Reforma Tributária e educação empresarial aplicados com
             método, indicadores e foco em resultado.
           </p>
