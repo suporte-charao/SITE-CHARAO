@@ -15,17 +15,29 @@ const SETORES_LINHA = "#2C6B4E";
 const SETORES_ICONE = "#4ADE80";
 const SETORES_TEXTO = "#D8F5E3";
 
+/** Ícones dos setores. Mantidos FORA da array de dados: guardar o componente
+ *  lucide (um objeto forwardRef) dentro de `setores` fazia o React 19 tentar
+ *  serializá-lo no payload do servidor e disparar "Only plain objects can be
+ *  passed to Client Components". Na data ficam só strings; o ícone é resolvido
+ *  aqui, na renderização. */
+const ICONES = {
+  industrias: Briefcase,
+  distribuidoras: Truck,
+  varejo: ShoppingBag,
+  servicos: Hexagon,
+} as const;
+
 /**
  * Setores atendidos — faixa verde com 4 células, seguindo a arte de
  * referência. Refeito em HTML (e não como imagem) para o texto ficar nítido
  * em qualquer tela, ser lido por buscadores e leitores de tela, e reagir ao
  * redimensionamento: no mobile as células viram uma coluna só.
  */
-const setores = [
-  { nome: "Indústrias", Icone: Briefcase },
-  { nome: "Distribuidoras", Icone: Truck },
-  { nome: "Varejo", Icone: ShoppingBag },
-  { nome: "Serviços", Icone: Hexagon },
+const setores: { nome: string; icone: keyof typeof ICONES }[] = [
+  { nome: "Indústrias", icone: "industrias" },
+  { nome: "Distribuidoras", icone: "distribuidoras" },
+  { nome: "Varejo", icone: "varejo" },
+  { nome: "Serviços", icone: "servicos" },
 ];
 
 export default function MapaAtuacaoSection() {
@@ -106,7 +118,9 @@ export default function MapaAtuacaoSection() {
           className="mt-8 grid grid-cols-1 gap-px sm:grid-cols-2"
           style={{ backgroundColor: SETORES_LINHA }}
         >
-          {setores.map(({ nome, Icone }) => (
+          {setores.map(({ nome, icone }) => {
+            const Icone = ICONES[icone];
+            return (
             <li
               key={nome}
               className="group relative isolate flex items-center gap-4 overflow-hidden bg-[#16402E] px-7 py-6 transition-colors duration-500 ease-out hover:bg-[#1A4C36] sm:px-10"
@@ -137,7 +151,8 @@ export default function MapaAtuacaoSection() {
                 {nome}
               </span>
             </li>
-          ))}
+            );
+          })}
         </ul>
       </div>
     </section>

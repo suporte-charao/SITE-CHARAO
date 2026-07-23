@@ -36,6 +36,12 @@ type Empresa = {
   highlights?: Record<string, string>;
   /** Rótulo do CTA que levará ao subdomínio da empresa. */
   ctaLabel: string;
+  /**
+   * Destino do CTA. Enquanto a empresa não tiver página própria fica sem
+   * destino ("#"), em vez de apontar para uma rota inexistente. Endereços
+   * externos (http…) abrem em nova aba automaticamente.
+   */
+  ctaHref?: string;
   /** Grade de indicadores curtos. Ignorada quando `checklist` está presente. */
   stats?: { value: string; label: string }[];
   /** Quando presente, substitui a grade de indicadores por uma checklist. */
@@ -170,6 +176,7 @@ const empresas: Empresa[] = [
       "Mentoria da Reforma Tributária": "#0D3731",
     },
     ctaLabel: "Saiba mais sobre a Charão Tributário",
+    ctaHref: "https://mentoria.charaoconsultoria.com/",
     photoAlt: "Sócia responsável pela Charão Tributário",
     photoSrc: "/021A6502.jpg",
     icon: Scale,
@@ -314,10 +321,13 @@ export default function EmpresasImersivasSection() {
                   </ul>
                 )}
 
-                {/* TODO: substituir "#" pelo link do subdomínio da empresa
-                    quando estiver disponível (ex.: https://consultoria.charao.com.br) */}
+                {/* TODO: Consultoria e Educacional ainda sem página própria —
+                    preencher `ctaHref` quando os endereços existirem. */}
                 <a
-                  href="#"
+                  href={empresa.ctaHref ?? "#"}
+                  {...(empresa.ctaHref?.startsWith("http")
+                    ? { target: "_blank", rel: "noopener noreferrer" }
+                    : {})}
                   style={{
                     backgroundColor: theme.ctaBg,
                     color: theme.ctaText,

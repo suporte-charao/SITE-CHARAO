@@ -51,19 +51,6 @@ export default function HeroSection() {
           className="h-full object-cover object-bottom"
           priority
         />
-
-        {/* Selo de 19 anos reinando sozinho no vão escuro à direita da cabeça
-            dele. Top fixo em pixels para nunca colidir com o header fixed
-            (~89px). */}
-        <div className="absolute right-[3%] top-28 z-20 lg:top-32">
-          <Image
-            src="/selo-19-anos.png"
-            alt="Selo comemorativo 19 anos — Grupo Charão"
-            width={504}
-            height={495}
-            className="h-auto w-32 object-contain drop-shadow-[0_0_45px_rgba(197,160,89,0.35)]"
-          />
-        </div>
       </div>
 
       {/* Primeira tela: ocupa 100vh exatos, então o Hero aparece inteiro ao
