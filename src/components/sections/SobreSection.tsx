@@ -14,7 +14,7 @@ const STUDIO_BG = "#E5E4E2";
 export default function SobreSection() {
   return (
     <section
-      className="relative w-full overflow-hidden pt-16 lg:pt-0"
+      className="relative w-full overflow-hidden pt-10 lg:pt-0"
       style={{ backgroundColor: STUDIO_BG }}
     >
       <h2 className="mx-auto mb-8 max-w-4xl text-balance px-6 text-center text-[1.6rem] font-light leading-[1.15] tracking-tight text-[#1E293B] md:text-[2.2rem] lg:absolute lg:inset-x-0 lg:top-[3.2vw] lg:z-10 lg:mb-0 lg:max-w-5xl lg:text-[clamp(1.6rem,2.56vw,2.7rem)] lg:leading-[1.1]">

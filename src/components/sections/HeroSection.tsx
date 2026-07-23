@@ -80,19 +80,21 @@ export default function HeroSection() {
                 de linha equilibradas (bloco visualmente organizado, sem
                 recorrer a text-justify); no mobile os spans ficam inline e o
                 texto flui naturalmente. */}
-            <span className="lg:block">Estratégia que protege</span>{" "}
+            <span className="lg:block">Transformamos gestão contábil,</span>{" "}
             <span className="lg:block">
-              o lucro, <span className="text-tributario-300">fortalece decisões</span>
+              <span className="text-tributario-300">inteligência tributária</span> e
             </span>{" "}
+            <span className="lg:block">educação empresarial em segurança,</span>{" "}
             <span className="lg:block">
-              <span className="text-tributario-300">e sustenta</span> o crescimento
-            </span>{" "}
-            <span className="lg:block">da sua empresa.</span>
+              eficiência e <span className="text-tributario-300">proteção do lucro</span>.
+            </span>
           </h1>
 
           <p className="hero-in-sub mt-6 max-w-md text-pretty text-base leading-relaxed text-white lg:text-lg">
-            Lucro Real, Reforma Tributária e educação empresarial aplicados com
-            método, indicadores e foco em resultado.
+            Unimos 19 anos de expertise na Zona Franca de Manaus e na Área de
+            Livre Comércio de Boa Vista para dominar as complexidades do Lucro
+            Real e da Reforma Tributária, garantindo segurança e crescimento
+            para sua empresa.
           </p>
 
           {/* Botão inferior (brief Sessão 1): "Descubra a solução certa para

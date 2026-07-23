@@ -99,7 +99,10 @@ export default function MetodologiaSection() {
   return (
     <section
       id="metodologia"
-      className="relative isolate overflow-hidden bg-marinho-900 py-24 lg:py-32"
+      // pb menor que pt no mobile: com o pt-16 da SobreSection logo abaixo,
+      // py-24 nos dois lados somava 160px de vão vazio entre o botão e o
+      // título seguinte — um "buraco" visível na emenda escuro→claro.
+      className="relative isolate overflow-hidden bg-marinho-900 pb-16 pt-24 lg:py-32"
     >
       {/* Atmosfera: brilho verde difuso, ecoando a pirâmide. */}
       <div
