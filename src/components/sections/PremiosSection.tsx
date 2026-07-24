@@ -42,6 +42,10 @@ const premios: Premio[] = [
         src: "/gptw2026.png",
         alt: "Selo Great Place To Work Certificada — Brasil, Jul 2026 a Jul 2027",
       },
+      {
+        src: "/Selo-Ranking-Brasil-Pequenas-Empresas-2025.png",
+        alt: "Selo Great Place To Work — Melhores Empresas Para Trabalhar, Pequenas Empresas, Brasil 2025",
+      },
     ],
   },
   {
@@ -139,7 +143,9 @@ export default function PremiosSection() {
                 />
               )}
 
-              <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,340px)_1fr] lg:gap-16">
+              {/* 430px: os DOIS selos GPTW (147px + 208px + gap 32px = 387px)
+                  precisam caber lado a lado — com 340px quebravam em 2 linhas. */}
+              <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,430px)_1fr] lg:gap-16">
                 {/* Pedestal dos selos: halo dourado que acende no hover. */}
                 <div className="relative flex justify-center lg:justify-start">
                   <span

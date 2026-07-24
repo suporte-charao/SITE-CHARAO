@@ -28,7 +28,7 @@ export default function SobreSection() {
           fundo do estúdio já é a cor da seção. */}
       <div className="relative aspect-[200/100] w-full overflow-hidden lg:aspect-[200/87]">
         <Image
-          src="/021A6543.jpg"
+          src="/equipe-socios-otim.jpg"
           alt="Equipe de sócios do Grupo Charão"
           fill
           priority={false}

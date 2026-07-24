@@ -4,10 +4,13 @@ import { Instagram } from "lucide-react";
 import Logo from "@/components/Logo";
 import { navLinks } from "@/lib/nav";
 
+/* #empresas-servicos: a âncora #servicos não existe na página — os 3 links
+   clicavam no vazio (bug pego em auditoria). Cada empresa aponta para o
+   próprio painel da Sessão 3. */
 const empresas = [
-  { label: "Charão Consultoria", href: "#servicos" },
-  { label: "Charão Tributário", href: "#servicos" },
-  { label: "Charão Educacional", href: "#servicos" },
+  { label: "Charão Consultoria", href: "#consultoria" },
+  { label: "Charão Tributário", href: "#tributario" },
+  { label: "Charão Educacional", href: "#educacional" },
 ];
 
 /* Logo do WhatsApp (lucide não traz ícones de marca) — inline para ser
@@ -90,12 +93,14 @@ export default function Footer() {
 
           {/* Coluna: navegação */}
           <nav className="lg:col-span-2">
-            <ul className="space-y-3 text-sm">
+            {/* py-1.5 + inline-block: alvo de toque ~30px (os 18px de uma
+                linha de texto eram apertados demais no mobile). */}
+            <ul className="space-y-1.5 text-sm">
               {navLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-white/75 transition-colors hover:text-white"
+                    className="inline-block py-1.5 text-white/75 transition-colors hover:text-white"
                   >
                     {link.label}
                   </Link>
@@ -109,12 +114,12 @@ export default function Footer() {
             <h3 className="mb-4 text-xs font-medium uppercase tracking-wider text-white/40">
               Empresas
             </h3>
-            <ul className="space-y-3 text-sm">
+            <ul className="space-y-1.5 text-sm">
               {empresas.map((item) => (
                 <li key={item.label}>
                   <Link
                     href={item.href}
-                    className="text-white/75 transition-colors hover:text-white"
+                    className="inline-block py-1.5 text-white/75 transition-colors hover:text-white"
                   >
                     {item.label}
                   </Link>

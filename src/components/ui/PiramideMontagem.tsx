@@ -165,61 +165,78 @@ export default function PiramideMontagem() {
         /* Escondida antes da montagem, sem transição (evita flash). */
         .pm.is-armed .piece { opacity: 0; }
 
-        .pm.is-mount .piece-base {
-          animation: pmBase 1s cubic-bezier(0.22,1,0.36,1) both;
-        }
-        .pm.is-mount .piece-middle {
-          animation: pmMiddle 1s cubic-bezier(0.22,1,0.36,1) 0.18s both;
-        }
-        .pm.is-mount .piece-top {
-          animation: pmTop 0.95s cubic-bezier(0.22,1,0.36,1) 0.36s both;
-        }
-        /* Rotação contínua SUTIL: um balanço 3D (rotateY) que nunca chega ao
-           perfil — a arte é 2D, então um giro de 360° a deixaria fininha como
-           uma lasca. O vai-e-vem suave lê como objeto tecnológico girando de
-           leve para pegar a luz. Ciclo fechado (‑16→16→‑16), sem emenda. */
-        .pm.is-spin { animation: pmSpin 9s ease-in-out infinite; }
+        .pm.is-mount .piece-base   { animation: pmBase 1.05s both; }
+        .pm.is-mount .piece-middle { animation: pmMiddle 1.05s 0.16s both; }
+        .pm.is-mount .piece-top    { animation: pmTop 1s 0.34s both; }
 
+        /* Movimento contínuo VIVO, em duas camadas dessincronizadas:
+           - balanço rotateY (11s) que COMEÇA e termina em 0° — emenda
+             perfeita com o fim da montagem (a versão anterior iniciava o
+             ciclo em -16° e a pirâmide dava um salto seco: lia como bug);
+           - flutuação vertical (7s) no wrapper. 7 e 11 são co-primos: a
+             composição só se repete a cada 77s, então o movimento nunca
+             parece um metrônomo de vai-e-vem. */
+        .pm-float.is-spin { animation: pmFloat 7s ease-in-out infinite; }
+        .pm.is-spin       { animation: pmSway 11s ease-in-out infinite; }
+
+        /* Settle com easing POR SEGMENTO: chegada desacelerando forte até o
+           leve overshoot (80%), depois assentamento macio até o encaixe —
+           o easing único de antes fazia o trecho final "engatar". */
         @keyframes pmBase {
-          0%   { opacity: 0; transform: translate(-58px, 44px) rotate(-8deg); }
-          72%  { opacity: 1; transform: translate(5px, -6px) rotate(1.4deg); }
+          0%   { opacity: 0; transform: translate(-58px, 44px) rotate(-8deg);
+                 animation-timing-function: cubic-bezier(0.18, 0.9, 0.28, 1); }
+          80%  { opacity: 1; transform: translate(3px, -3px) rotate(0.7deg);
+                 animation-timing-function: cubic-bezier(0.45, 0, 0.25, 1); }
           100% { opacity: 1; transform: translate(0,0) rotate(0deg); }
         }
         @keyframes pmMiddle {
-          0%   { opacity: 0; transform: translate(64px, 12px) rotate(7deg); }
-          72%  { opacity: 1; transform: translate(-6px, -4px) rotate(-1.4deg); }
+          0%   { opacity: 0; transform: translate(64px, 12px) rotate(7deg);
+                 animation-timing-function: cubic-bezier(0.18, 0.9, 0.28, 1); }
+          80%  { opacity: 1; transform: translate(-4px, -2px) rotate(-0.7deg);
+                 animation-timing-function: cubic-bezier(0.45, 0, 0.25, 1); }
           100% { opacity: 1; transform: translate(0,0) rotate(0deg); }
         }
         @keyframes pmTop {
-          0%   { opacity: 0; transform: translate(0, -78px) rotate(-6deg); }
-          72%  { opacity: 1; transform: translate(0, 5px) rotate(1.2deg); }
+          0%   { opacity: 0; transform: translate(0, -78px) rotate(-6deg);
+                 animation-timing-function: cubic-bezier(0.18, 0.9, 0.28, 1); }
+          80%  { opacity: 1; transform: translate(0, 3px) rotate(0.5deg);
+                 animation-timing-function: cubic-bezier(0.45, 0, 0.25, 1); }
           100% { opacity: 1; transform: translate(0,0) rotate(0deg); }
         }
-        @keyframes pmSpin {
-          0%   { transform: rotateY(-16deg); }
-          50%  { transform: rotateY(16deg); }
-          100% { transform: rotateY(-16deg); }
+        @keyframes pmSway {
+          0%   { transform: rotateY(0deg); }
+          25%  { transform: rotateY(11deg); }
+          75%  { transform: rotateY(-11deg); }
+          100% { transform: rotateY(0deg); }
+        }
+        @keyframes pmFloat {
+          0%, 100% { transform: translateY(0); }
+          50%      { transform: translateY(-9px); }
         }
         @media (prefers-reduced-motion: reduce) {
-          .pm, .pm .piece { animation: none !important; opacity: 1 !important; transform: none !important; }
+          .pm, .pm-float, .pm .piece { animation: none !important; opacity: 1 !important; transform: none !important; }
         }
       `}</style>
 
-      <div
-        ref={ref}
-        role="img"
-        aria-label="Pirâmide da Metodologia Charão. Da base ao topo: Sistemas, Processos e Pessoas."
-        className={cn(
-          "pm pm-piece-orig relative aspect-[640/680] [transform-style:preserve-3d]",
-          phase === "armed" && "is-armed",
-          phase === "mount" && "is-mount",
-          spinning && "is-spin",
-        )}
-      >
-        {/* Ordem base → meio → topo: cada peça cobre o miolo do degrau de baixo. */}
-        <PecaBase />
-        <PecaMeio />
-        <PecaTopo />
+      {/* Wrapper da flutuação (período 7s) — separado do balanço (11s) para
+          compor os dois movimentos em elementos distintos. */}
+      <div className={cn("pm-float", spinning && "is-spin")}>
+        <div
+          ref={ref}
+          role="img"
+          aria-label="Pirâmide da Metodologia Charão. Da base ao topo: Sistemas, Processos e Pessoas."
+          className={cn(
+            "pm pm-piece-orig relative aspect-[640/680] [transform-style:preserve-3d]",
+            phase === "armed" && "is-armed",
+            phase === "mount" && "is-mount",
+            spinning && "is-spin",
+          )}
+        >
+          {/* Ordem base → meio → topo: cada peça cobre o miolo do degrau de baixo. */}
+          <PecaBase />
+          <PecaMeio />
+          <PecaTopo />
+        </div>
       </div>
     </div>
   );

@@ -53,9 +53,13 @@ export default function DepoimentoCard3D({
     return () => io.disconnect();
   }, []);
 
+  /* Tilt só faz sentido com ponteiro que PAIRA (mouse/trackpad). Em telas de
+     toque o dedo rolando sobre o card disparava pointermove e o card tremia
+     durante o scroll — lia como travamento. */
   const semMovimento = () =>
     typeof window !== "undefined" &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    (window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      window.matchMedia("(hover: none)").matches);
 
   const mover = (e: React.PointerEvent<HTMLDivElement>) => {
     const el = wrapRef.current;

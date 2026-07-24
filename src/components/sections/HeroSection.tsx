@@ -71,7 +71,12 @@ export default function HeroSection() {
       {/* Primeira tela: ocupa 100vh exatos, então o Hero aparece inteiro ao
           abrir e a curva (que vem depois, em fluxo) fica abaixo da dobra —
           revelada só ao rolar. */}
-      <div className="relative z-20 mx-auto grid min-h-screen max-w-[1180px] grid-cols-1 items-center gap-8 px-8 pb-16 pt-28 lg:grid-cols-2 lg:gap-8 lg:px-12 lg:pb-16 lg:pt-44">
+      {/* [@media(max-height:...)]: em notebooks com pouca altura útil (zoom
+          100%, barra de favoritos, etc.) o padding vertical fixo somado à
+          altura do bloco de texto ultrapassava 100vh e cortava os selos na
+          base. Essas variantes de altura comprimem o respiro SÓ nesse
+          cenário — em telas normais/altas nada muda. */}
+      <div className="relative z-20 mx-auto grid min-h-screen max-w-[1180px] grid-cols-1 items-center gap-8 px-8 pb-16 pt-28 [@media(max-height:760px)]:pb-8 [@media(max-height:760px)]:pt-32 lg:grid-cols-2 lg:gap-8 lg:px-12 lg:pb-16 lg:pt-44 [@media(max-height:760px)]:lg:pb-8 [@media(max-height:760px)]:lg:pt-36">
         <div className="relative z-20 max-w-xl">
           {/* Tipografia do Figma: peso REGULAR (não medium) em corpo grande,
               entrelinha ~1.16 — o look "editorial leve" da referência. */}
@@ -101,7 +106,7 @@ export default function HeroSection() {
           {/* Texto completo. No desktop 17px (1px abaixo do padrão lg:text-lg)
               já fecha em 4 linhas dentro da coluna de ~528px — medido pixel a
               pixel; sem essa calibragem o texto quebrava em 5 linhas. */}
-          <p className="hero-in-sub mt-6 max-w-md text-pretty text-base leading-relaxed text-white lg:max-w-[33rem] lg:text-[17px]">
+          <p className="hero-in-sub mt-6 max-w-md text-pretty text-base leading-relaxed text-white [@media(max-height:760px)]:mt-4 lg:max-w-[33rem] lg:text-[17px]">
             Unimos 19 anos de expertise na Zona Franca de Manaus e na Área de
             Livre Comércio de Boa Vista para dominar as complexidades do Lucro
             Real e da Reforma Tributária, garantindo segurança e crescimento
@@ -110,7 +115,7 @@ export default function HeroSection() {
 
           {/* Botão inferior (brief Sessão 1): "Descubra a solução certa para
               sua empresa" → leva à seção "Conheça o Grupo Charão" (empresas). */}
-          <div className="mt-9">
+          <div className="mt-9 [@media(max-height:760px)]:mt-6">
             <a
               href="#empresas-servicos"
               className="inline-flex items-center justify-center rounded-full bg-laranja-500 px-8 py-3.5 text-sm font-semibold text-marinho-950 transition-colors hover:bg-laranja-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-laranja-500"
@@ -122,7 +127,7 @@ export default function HeroSection() {
           {/* Prova social imediata: GPTW + Leaders League logo abaixo do CTA.
               A âncora #premios saiu daqui quando a Sessão 10 (Prêmios) ganhou
               seção própria — dois elementos com o mesmo id quebrariam o menu. */}
-          <div className="mt-10 flex items-center gap-6">
+          <div className="mt-10 flex items-center gap-6 [@media(max-height:760px)]:mt-6">
             {seals.map((seal) => (
               <Image
                 key={seal.src}
@@ -130,7 +135,7 @@ export default function HeroSection() {
                 alt={seal.alt}
                 width={seal.width}
                 height={seal.height}
-                className="h-20 w-auto shrink-0 object-contain md:h-[5.85rem]"
+                className="h-20 w-auto shrink-0 object-contain md:h-[5.85rem] [@media(max-height:760px)]:h-16 [@media(max-height:760px)]:md:h-16"
               />
             ))}
           </div>

@@ -237,13 +237,17 @@ const empresas: Empresa[] = [
     },
     ctaLabel: "Conheça a Charão Educacional",
     photoAlt: "Sócios responsáveis pela Charão Educacional",
-    photoSrc: "/educ.png",
+    // FOTO.png original (2560x2469) tinha as 2 pessoas deslocadas para a
+    // direita, com ~30% de fundo vazio à esquerda. Recorte derivado
+    // (educacional-enquadrado.png) elimina esse vazio: limites medidos por
+    // perfil de luminância por faixa de altura (cabeça, tronco, braço da
+    // sócia) com margem de segurança generosa antes de cada corte, para
+    // garantir que nenhuma parte de ninguém fosse cortada.
+    photoSrc: "/educacional-enquadrado.png",
     photoFit: "contain",
-    // Mesma lógica da Consultoria e do Tributário: aspectRatio na proporção
-    // REAL do arquivo para a foto preencher o card por completo, sem sobra e
-    // sem cortar ninguém das 3 pessoas. Arquivo atualizado com um recorte
-    // mais largo (1122x1402 — mesma proporção do Tributário, era 1023x1537).
-    photoAspect: "1122 / 1402",
+    // Proporção REAL do recorte (1928x2355), para preencher o card por
+    // completo sem sobra lateral.
+    photoAspect: "1928 / 2355",
     icon: GraduationCap,
     theme: {
       bg: "#1A1A1A",
@@ -349,9 +353,11 @@ export default function EmpresasImersivasSection() {
                 )}
 
                 {/* TODO: Consultoria e Educacional ainda sem página própria —
-                    preencher `ctaHref` quando os endereços existirem. */}
+                    preencher `ctaHref` quando os endereços existirem. Até lá o
+                    fallback leva ao CTA de contato: href="#" rolava a página
+                    inteira de volta ao TOPO no clique, o que lia como bug. */}
                 <a
-                  href={empresa.ctaHref ?? "#"}
+                  href={empresa.ctaHref ?? "#contato"}
                   {...(empresa.ctaHref?.startsWith("http")
                     ? { target: "_blank", rel: "noopener noreferrer" }
                     : {})}
@@ -432,13 +438,16 @@ export default function EmpresasImersivasSection() {
                         src={empresa.photoSrc}
                         alt={empresa.photoAlt}
                         fill
-                        quality={95}
+                        // q82 + sizes reais: o card tem ~640px de largura no
+                        // desktop; q95 com 50vw pedia variantes enormes (w=3840)
+                        // sem ganho visual perceptível.
+                        quality={82}
                         className={
                           empresa.photoFit === "contain"
                             ? "object-contain"
                             : "object-cover object-center"
                         }
-                        sizes="(min-width: 768px) 50vw, 100vw"
+                        sizes="(min-width: 1024px) 640px, 92vw"
                       />
                     ) : (
                       <span className="absolute inset-0 flex items-center justify-center">

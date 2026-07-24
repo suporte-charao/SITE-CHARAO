@@ -1,11 +1,13 @@
 "use client";
 
+import { useEffect, useRef, useState } from "react";
 import AutoScroll from "embla-carousel-auto-scroll";
 
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
+  type CarouselApi,
 } from "@/components/ui/carousel";
 import { cn } from "@/lib/utils";
 
@@ -53,12 +55,41 @@ interface Logos3Props {
  * horizontal ocupa 3x a largura de um quadrado e a fileira fica irregular.
  */
 const Logos3 = ({ logos, className, fadeFrom = "from-white" }: Logos3Props) => {
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [api, setApi] = useState<CarouselApi>();
+
+  /* Perf: o AutoScroll rodava a página inteira, mesmo com a esteira fora da
+     tela — trabalho contínuo de main thread à toa. Pausa quando sai da
+     viewport e retoma ao voltar; com prefers-reduced-motion fica parada. */
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!api || !root) return;
+    const auto = (api.plugins() as { autoScroll?: { play: () => void; stop: () => void } })
+      .autoScroll;
+    if (!auto) return;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      auto.stop();
+      return;
+    }
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) auto.play();
+        else auto.stop();
+      },
+      { rootMargin: "120px 0px" },
+    );
+    io.observe(root);
+    return () => io.disconnect();
+  }, [api]);
+
   return (
-    <div className={cn("relative", className)}>
+    <div ref={rootRef} className={cn("relative", className)}>
       <div className="relative mx-auto flex items-center justify-center">
         <Carousel
           opts={{ loop: true, align: "start" }}
           plugins={[AutoScroll({ playOnInit: true, speed: 0.7 })]}
+          setApi={setApi}
           className="w-full"
         >
           <CarouselContent className="ml-0">

@@ -80,7 +80,7 @@ export default function ManifestoFaixaSection() {
           className="group relative block aspect-video w-full overflow-hidden rounded-2xl shadow-[0_20px_60px_-20px_rgba(10,10,10,0.35)] ring-1 ring-[#C5A059]/25 transition-transform duration-500 ease-out hover:scale-[1.01]"
         >
           <Image
-            src="/021A6543.jpg"
+            src="/equipe-socios-otim.jpg"
             alt="Equipe do Grupo Charão — vídeo institucional"
             fill
             className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-105"

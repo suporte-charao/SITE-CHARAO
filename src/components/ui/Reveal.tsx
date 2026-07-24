@@ -91,6 +91,12 @@ export default function Reveal({
   const hidden = shown === false;
   const dur = duration ?? (variant === "fade-up" ? 750 : 950);
 
+  /* will-change só enquanto a entrada está armada/animando. Deixá-lo
+     permanente mantinha DEZENAS de camadas compositadas vivas na página
+     inteira (custo real de memória/compositor); "auto" após revelar devolve
+     tudo ao fluxo normal de pintura. */
+  const wc = (props: string) => (hidden ? props : "auto");
+
   /* mask-up: o wrapper é a máscara (overflow-hidden); um filho interno faz o
      movimento — o texto surge "de dentro" da própria linha. */
   if (variant === "mask-up") {
@@ -101,7 +107,7 @@ export default function Reveal({
             transition: `transform ${dur}ms ${EASE} ${delay}ms, opacity ${Math.round(dur * 0.6)}ms ease-out ${delay}ms`,
             transform: hidden ? "translateY(108%)" : "none",
             opacity: hidden ? 0.25 : 1,
-            willChange: "transform",
+            willChange: wc("transform"),
           }}
         >
           {children}
@@ -120,7 +126,7 @@ export default function Reveal({
             transition: `clip-path ${dur}ms ${EASE} ${delay}ms, transform ${dur}ms ${EASE} ${delay}ms`,
             clipPath: hidden ? "inset(0 100% 0 0)" : "inset(0 0% 0 0)",
             transform: hidden ? "translateX(-14px)" : "none",
-            willChange: "clip-path, transform",
+            willChange: wc("clip-path, transform"),
           }}
         >
           {children}
@@ -143,7 +149,7 @@ export default function Reveal({
     transition: `transform ${dur}ms ${EASE} ${delay}ms, opacity ${Math.round(dur * 0.7)}ms ease-out ${delay}ms`,
     transform: hidden ? transform : "none",
     opacity: hidden ? 0 : 1,
-    willChange: "transform",
+    willChange: wc("transform"),
   };
 
   return (

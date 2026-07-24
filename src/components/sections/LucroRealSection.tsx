@@ -37,7 +37,7 @@ export default function LucroRealSection() {
             no topo (como 16/9) cortaria justo atrás do texto sobreposto. */}
         <div className="relative aspect-[4/3] w-full overflow-hidden sm:aspect-[3/2]">
           <Image
-            src="/021A6102.jpg"
+            src="/lucro-real-otim.jpg"
             alt="Equipe do Grupo Charão"
             fill
             className="object-cover"
