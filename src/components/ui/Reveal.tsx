@@ -101,7 +101,17 @@ export default function Reveal({
      movimento — o texto surge "de dentro" da própria linha. */
   if (variant === "mask-up") {
     return (
-      <div ref={ref} className={cn("overflow-hidden", className)}>
+      /* A máscara é um clip-path estendido 14px ABAIXO da caixa — não um
+         overflow-hidden puro: títulos grandes do Tailwind (text-5xl tem
+         line-height 1) deixam o descender de g/j/q/ç fora da caixa, e o
+         overflow decepava a perna das letras depois de revelado. Os 14px
+         extras ficam invisíveis durante a subida na prática (o texto entra
+         com opacity 0.25) e devolvem o descender inteiro no repouso. */
+      <div
+        ref={ref}
+        className={className}
+        style={{ clipPath: "inset(0 0 -14px 0)" }}
+      >
         <div
           style={{
             transition: `transform ${dur}ms ${EASE} ${delay}ms, opacity ${Math.round(dur * 0.6)}ms ease-out ${delay}ms`,
