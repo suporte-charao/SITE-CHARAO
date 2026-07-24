@@ -103,14 +103,16 @@ export default function HeroSection() {
             </span>
           </h1>
 
-          {/* Texto completo. No desktop 17px (1px abaixo do padrão lg:text-lg)
-              já fecha em 4 linhas dentro da coluna de ~528px — medido pixel a
-              pixel; sem essa calibragem o texto quebrava em 5 linhas. */}
-          <p className="hero-in-sub mt-6 max-w-md text-pretty text-base leading-relaxed text-white [@media(max-height:760px)]:mt-4 lg:max-w-[33rem] lg:text-[17px]">
-            Unimos 19 anos de expertise na Zona Franca de Manaus e na Área de
-            Livre Comércio de Boa Vista para dominar as complexidades do Lucro
-            Real e da Reforma Tributária, garantindo segurança e crescimento
-            para sua empresa.
+          {/* Tamanho calibrado pixel a pixel na coluna de ~528px (o limite
+              antes de esbarrar na foto). Em telas de pouca altura o texto
+              encolhe mais um passo para não empurrar CTA/selos para fora da
+              primeira tela. */}
+          <p className="hero-in-sub mt-6 max-w-md text-pretty text-base leading-relaxed text-white [@media(max-height:760px)]:mt-4 [@media(max-height:760px)]:text-[15px] lg:max-w-[33rem] lg:text-[16px] [@media(max-height:760px)]:lg:text-[15px]">
+            Com forte atuação na região Norte e visibilidade nacional, unimos 19
+            anos de expertise na Zona Franca de Manaus e na Área de Livre
+            Comércio de Boa Vista para dominar a complexidade do Lucro Real e da
+            Reforma Tributária, garantindo segurança e crescimento para sua
+            empresa.
           </p>
 
           {/* Botão inferior (brief Sessão 1): "Descubra a solução certa para
